@@ -30,68 +30,72 @@
 }
 
 .appie-features-9-area {
-  padding-top: 120px;
+	padding-top: 120px;
 
-  @media #{$md} {
+  @media #{$md}{
     padding-top: 95px;
   }
-  @media #{$xs} {
+  @media #{$xs}{
     padding-top: 95px;
   }
 
   .appie-features-9-area-heading {
-    margin-bottom: 48px;
+	margin-bottom: 48px;
     span {
       font-size: 25px;
       color: $theme-color-9;
       font-weight: 500;
-      @media #{$md} {
+      @media #{$md}{
         font-size: 22px;
         line-height: 28px;
       }
-      @media #{$xs} {
+      @media #{$xs}{
         font-size: 18px;
         line-height: 26px;
       }
     }
     h2 {
-      font-size: 44px;
-      line-height: 50px;
-      color: #0e1133;
-      font-weight: 900;
-      margin-top: 10px;
+		font-size: 44px;
+		line-height: 50px;
+		color: #0e1133;
+		font-weight: 900;
+		margin-top: 10px;
 
-      @media #{$md} {
-        font-size: 36px;
-        line-height: 46px;
-      }
-      @media #{$xs} {
-        font-size: 26px;
-        line-height: 36px;
-      }
+    @media #{$md}{
+		  font-size: 36px;
+		  line-height: 46px;
+    }
+    @media #{$xs}{
+		  font-size: 26px;
+		  line-height: 36px;
+    }
+
     }
   }
 
-  .appie-features-9-area-thumb {
-    margin-left: -140px;
-    @media #{$lg} {
-      margin-left: 0px;
-      text-align: center;
-    }
-    @media #{$md} {
-      margin-left: 0px;
-      text-align: center;
-    }
-    @media #{$xs} {
-      margin-left: 0px;
-      text-align: center;
-    }
+  .appie-features-9-area-thumb{
+	margin-left: -140px;
+  @media #{$lg}{
+    margin-left: 0px;
+    text-align: center;
+  }
+  @media #{$md}{
+    margin-left: 0px;
+    text-align: center;
+  }
+  @media #{$xs}{
+    margin-left: 0px;
+    text-align: center;
+  }
 
-    img {
-      max-width: 100%;
-    }
+	
+	img{
+		max-width: 100%;
+	}
+
   }
 }
+
 
 .appie-features-tabs-btn {
   & .nav {
@@ -143,38 +147,41 @@
     }
   }
 
-  &.appie-features-9-tabs-btn {
-    & a {
-      color: #63636a;
-      border-bottom: 3px solid #e8eaef;
-      border-right: none;
-      padding-right: 30px;
-      padding-bottom: 15px;
-      @media #{$md} {
-        padding-right: 20px;
-        padding-left: 20px;
-      }
-      @media #{$xs} {
-        padding-right: 15px;
-        padding-left: 15px;
-        margin-bottom: 20px;
-      }
-      & i {
-        margin-right: 0px;
-        margin-left: 10px;
-      }
-      &.active {
-        border-bottom-color: $theme-color-8;
-        background: transparent;
-        color: $theme-color-8;
-        & i {
-          color: $white;
-          background: $theme-color-8;
-        }
-      }
-    }
-  }
+  &.appie-features-9-tabs-btn{
+
+	& a {
+		color: #63636a;
+		border-bottom: 3px solid #e8eaef;
+		border-right: none;
+		padding-right: 30px;
+		padding-bottom: 15px;
+		@media #{$md} {
+		  padding-right: 20px;
+		  padding-left: 20px;
+		}
+		@media #{$xs} {
+		  padding-right: 15px;
+		  padding-left: 15px;
+		  margin-bottom: 20px;
+		}
+		& i {
+			margin-right: 0px;
+			margin-left: 10px;
+		}
+		&.active {
+		  border-bottom-color: $theme-color-8;
+		  background: transparent;
+		  color: $theme-color-8;
+		  & i {
+			color: $white;
+			background: $theme-color-8;
+		  }
+		}
+	  }
+  } 
 }
+
+
 
 .appie-features-content {
   @media #{$md} {
@@ -207,6 +214,7 @@
     line-height: 28px;
     padding-bottom: 30px;
   }
+
 }
 
 .appie-features-area-2 {
@@ -369,17 +377,17 @@
   }
 }
 
-.appie-features-9-tabs-content {
-  padding-top: 35px;
+.appie-features-9-tabs-content{
+	padding-top: 35px;
 
-  @media #{$xs} {
-    padding-top: 0px;
+  @media #{$xs}{
+	  padding-top: 0px;
   }
 
-  p {
+	p {
     font-size: 16px;
     line-height: 26px;
     color: $text-color;
     padding-bottom: 40px;
-  }
+	}
 }

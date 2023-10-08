@@ -109,9 +109,6 @@ function Header() {
                       </div>
                     </li>
                     <li className="menu-item-has-children active">
-                      <Link to="/jobspage">Empleos</Link>
-                    </li>
-                    <li className="menu-item-has-children active">
                       <a href="/404">Nosotros</a>
                     </li>
                     <li className="menu-item-has-children active">
