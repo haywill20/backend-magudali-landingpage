@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
+import axios from "axios";
+const URI = "http://localhost:8000/empleos/";
+
 import {
   countryCodes,
   countries,
@@ -62,6 +65,16 @@ const styles = {
 };
 
 function RegisterCv() {
+  const [empleos, setEmpleos] = useState([]);
+  useEffect(() => {
+    getEmpleos();
+  }, []);
+
+  const getEmpleos = async () => {
+    const res = await axios.get(URI);
+    setEmpleos(res.data);
+  };
+
   const [isOpenCountry, setIsOpenCountry] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState("");
 
@@ -545,14 +558,14 @@ function RegisterCv() {
                     className="country-list"
                     ref={dropdownRef}
                   >
-                    {empleos.map((option, index) => (
+                    {empleos.map((empleo) => (
                       <li
                         style={styles.li}
-                        key={index}
+                        key={empleo.id}
                         className="list-item"
-                        onClick={() => handleSelect(option, "empleo")}
+                        onClick={() => handleSelect(empleo.nombre, "empleo")}
                       >
-                        {option}
+                        {empleo.nombre}
                       </li>
                     ))}
                   </ul>

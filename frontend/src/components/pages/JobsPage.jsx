@@ -2,18 +2,22 @@ import React, { useState, useEffect } from "react";
 import Footer from "../common/Footer";
 import Header from "../common/Header";
 import Card from "../shared/CardJobs";
-import data from "../data/DataJobs";
 
-function JobsPage() {
-  const [selectedDetails, setSelectedDetails] = useState(null); // Estado para almacenar detalles seleccionados
+import axios from "axios";
+const URI = "http://localhost:8000/empleos/";
 
-  const handleCardClick = (details) => {
-    setSelectedDetails(details);
-  };
+const JobsPage = () => {
+  const [empleos, setEmpleos] = useState([]);
 
   useEffect(() => {
-    document.title = "Empleos"; // Establecer el título del documento
+    getEmpleos();
   }, []);
+
+  //procedimiento para mostrar todos los empleos
+  const getEmpleos = async () => {
+    const res = await axios.get(URI);
+    setEmpleos(res.data);
+  };
 
   return (
     <>
@@ -33,15 +37,14 @@ function JobsPage() {
           </div>
 
           <div className="row">
-            {data.map((item, index) => (
-              <div key={index} className="col-lg-4 col-md-6">
+            {empleos.map((empleo) => (
+              <div key={empleo.id} className="col-lg-4 col-md-6">
                 <Card
-                  estilo={item.estilo}
-                  icon={item.icon}
-                  title={item.title}
-                  description={item.description}
-                  ruta={item.ruta}
-                  detalles={item.detalles}
+                  id={empleo.id}
+                  nombre={empleo.nombre}
+                  resumen={empleo.resumen}
+                  icon={empleo.icon}
+                  estilo={empleo.estilo}
                 />
               </div>
             ))}
@@ -51,6 +54,6 @@ function JobsPage() {
       <Footer />
     </>
   );
-}
+};
 
 export default JobsPage;

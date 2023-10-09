@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import Home from "./components/pages/Home";
 import ErrorPage from "./components/pages/ErrorPage";
@@ -14,6 +19,16 @@ import RegisterCv from "./components/pages/RegisterCv";
 import TermsSeller from "./components/pages/TermsSeller";
 import TermsDelivery from "./components/pages/TermsDelivery";
 import SupportPage from "./components/pages/SupportPage";
+import JobDetails from "./components/pages/JobDetails";
+import "./assets/css/bootstrap.min.css";
+import "./assets/css/font-awesome.min.css";
+import "./assets/css/animate.min.css";
+import "./assets/css/magnific-popup.css";
+import "./assets/css/slick.css";
+import "./assets/css/custom-animation.css";
+import "./assets/css/default.css";
+import "./assets/css/style.css";
+import "./assets/css/responsive.css";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -41,6 +56,7 @@ function App() {
             <Route path="/termsDelivery" element={<TermsDelivery />} />
             <Route path="/privacyPolicies" element={<PrivacyPoliciesPage />} />
             <Route path="/jobsPage" element={<JobsPage />} />
+            <Route path="/jobdetails/:id" element={<JobDetails />} />
             <Route path="/register" element={<RegisterCv />} />
             <Route path="/support" element={<SupportPage />} />
           </Routes>

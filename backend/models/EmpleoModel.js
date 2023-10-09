@@ -1,7 +1,7 @@
-//importamos la conexion a la base de datos
+//importamos la coneccion a la base de datos
 import db from "../database/db.js";
 
-//importamos Sequelize
+//importamos sequelize
 import { DataTypes } from "sequelize";
 
 const EmpleoModel = db.define("empleos", {
@@ -18,4 +18,5 @@ const EmpleoModel = db.define("empleos", {
   icon: { type: DataTypes.STRING },
   estilo: { type: DataTypes.STRING },
 });
+
 export default EmpleoModel;
