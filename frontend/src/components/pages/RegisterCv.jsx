@@ -2,13 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
 import axios from "axios";
-const URI = "http://localhost:8000/empleos/";
+const URIempleos = "http://localhost:8000/empleos/";
+const URIdatosgenerales = "http://localhost:8000/datosgenerales/";
+const URIeducaciones = "http://localhost:8000/educaciones/";
+const URIcertificaciones = "http://localhost:8000/certificaciones/";
+const URIexperienciaslaborales = "http://localhost:8000/experienciaslaborales/";
 
 import {
   countryCodes,
   countries,
-  disponibilidad,
-  empleos,
+  disponibilidades,
   sistemasOperativos,
   lenguajesProgramacion,
   tools,
@@ -64,45 +67,33 @@ const styles = {
   },
 };
 
-function RegisterCv() {
+const RegisterCv = () => {
   const [empleos, setEmpleos] = useState([]);
   useEffect(() => {
     getEmpleos();
   }, []);
 
   const getEmpleos = async () => {
-    const res = await axios.get(URI);
+    const res = await axios.get(URIempleos);
     setEmpleos(res.data);
   };
 
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [cod, setCod] = useState("");
+  const [telefono, setTelefono] = useState("");
   const [isOpenCountry, setIsOpenCountry] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState("");
-
   const [isOpenDisponibilidad, setIsOpenDisponibilidad] = useState(false);
   const [selectedDisponibilidad, setSelectedDisponibilidad] = useState("");
-
   const [isOpenEmpleo, setIsOpenEmpleo] = useState(false);
   const [selectedEmpleo, setSelectedEmpleo] = useState("");
-
+  const [aniosExperiencia, setAniosExperiencia] = useState("");
   const [expectativaSalario, setExpectativaSalario] = useState("");
-
-  const [educacionFields, setEducacionFields] = useState([
-    { institucion: "", mesFinEducacion: "", anioFinEducacion: "", carrera: "" },
-  ]);
-
-  const [isOpenSistemasOperativos, setIsOpenSistemasOperativos] =
-    useState(false);
-  const [selectedSistemasOperativos, setSelectedSistemasOperativos] = useState(
-    []
-  );
-
-  const [isOpenLenguajesProgramacion, setIsOpenLenguajesProgramacion] =
-    useState(false);
-  const [selectedLenguajesProgramacion, setSelectedLenguajesProgramacion] =
-    useState([]);
+  const [resumen, setResumen] = useState("");
 
   const [isOpenTools, setIsOpenTools] = useState(false);
-
   const [selectedTools, setSelectetTools] = useState([]);
 
   const [isOpenLibrerias, setIsOpenLibrerias] = useState(false);
@@ -119,6 +110,21 @@ function RegisterCv() {
 
   const [isOpenIngles, setIsOpenIngles] = useState(false);
   const [selectedIngles, setSelectedIngles] = useState("");
+
+  const [educacionFields, setEducacionFields] = useState([
+    { institucion: "", mesFinEducacion: "", anioFinEducacion: "", carrera: "" },
+  ]);
+
+  const [isOpenSistemasOperativos, setIsOpenSistemasOperativos] =
+    useState(false);
+  const [selectedSistemasOperativos, setSelectedSistemasOperativos] = useState(
+    []
+  );
+
+  const [isOpenLenguajesProgramacion, setIsOpenLenguajesProgramacion] =
+    useState(false);
+  const [selectedLenguajesProgramacion, setSelectedLenguajesProgramacion] =
+    useState([]);
 
   const [experienciaFields, setExperienciaFields] = useState([
     {
@@ -141,6 +147,48 @@ function RegisterCv() {
       institucionCertificacion: "",
     },
   ]);
+
+  //procedimiento para guardar los datos
+  const guardar = async (e) => {
+    e.preventDefault();
+
+    // Unir los elementos del array en una cadena
+    const sistemasOperativosString = selectedSistemasOperativos.join(", ");
+
+    const lenguajesProgramacionString =
+      selectedLenguajesProgramacion.join(", ");
+
+    const herramientasProgramacionString = selectedTools.join(", ");
+
+    const libreriasString = selectedLibrerias.join(", ");
+
+    const dataBaseString = selectedDataBases.join(", ");
+
+    const cloudString = selectedCloud.join(", ");
+
+    await axios.post(URIdatosgenerales, {
+      nombre: nombre,
+      apellido: apellido,
+      correo: correo,
+      cod: cod,
+      telefono: telefono,
+      pais: selectedCountry,
+      disponibilidad: selectedDisponibilidad,
+      vacante: selectedEmpleo,
+      aniosExperiencia: aniosExperiencia,
+      expectativaSalario: expectativaSalario,
+      resumen: resumen,
+      sistemasOperativos: sistemasOperativosString,
+      lenguajesProg: lenguajesProgramacionString,
+      herramientasProg: herramientasProgramacionString,
+      librerias: libreriasString,
+      basesDatos: dataBaseString,
+      clouds: cloudString,
+      español: selectedEspanol,
+      ingles: selectedIngles,
+    });
+  };
+
   // Controlador de eventos para el campo de texto de expectativa salarial
   const handleExpectativaSalarioChange = (event) => {
     const inputValue = event.target.value.replace(/\D/g, ""); // Elimina todos los caracteres no numéricos
@@ -392,7 +440,7 @@ function RegisterCv() {
         </div>
       </section>
       <div className="container mt-5">
-        <form id="formulario">
+        <form onSubmit={guardar} id="formulario">
           <h2 style={styles.datosGeneralesColor}>Datos Generales</h2>
           <br />
           <div className="row">
@@ -407,6 +455,8 @@ function RegisterCv() {
                 name="nombre"
                 placeholder="Ingrese su primer nombre"
                 required
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
               />
             </div>
 
@@ -420,6 +470,8 @@ function RegisterCv() {
                 id="apellido"
                 name="apellido"
                 placeholder="Ingrese su primer apellido"
+                value={apellido}
+                onChange={(e) => setApellido(e.target.value)}
               />
             </div>
 
@@ -433,6 +485,8 @@ function RegisterCv() {
                 id="correo"
                 name="correo"
                 placeholder="Ingrese su correo"
+                value={correo}
+                onChange={(e) => setCorreo(e.target.value)}
               />
             </div>
             <div className="col-lg-3 mb-3">
@@ -445,6 +499,8 @@ function RegisterCv() {
                     className="form-control"
                     id="codigoPais"
                     name="codigoPais"
+                    value={cod}
+                    onChange={(e) => setCod(e.target.value)}
                   >
                     {countryCodes.map((country) => (
                       <option key={country.code} value={country.code}>
@@ -459,6 +515,8 @@ function RegisterCv() {
                   id="telefono"
                   name="telefono"
                   placeholder="Número de teléfono"
+                  value={telefono}
+                  onChange={(e) => setTelefono(e.target.value)}
                 />
               </div>
             </div>
@@ -478,6 +536,7 @@ function RegisterCv() {
                   placeholder="Seleccione un país"
                   onClick={() => toggleDropdown("country")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
                   value={selectedCountry} // Mostrar el país seleccionado en el campo de texto
+                  onChange={(e) => setSelectedCountry(e.target.value)}
                   readOnly
                 />{" "}
                 {isOpenCountry && (
@@ -515,6 +574,7 @@ function RegisterCv() {
                   placeholder="Seleccione su disponibilidad"
                   onClick={() => toggleDropdown("disponibilidad")}
                   value={selectedDisponibilidad}
+                  onChange={(e) => selectedDisponibilidad(e.target.value)}
                 />
                 {isOpenDisponibilidad && (
                   <ul
@@ -522,7 +582,7 @@ function RegisterCv() {
                     className="country-list"
                     ref={dropdownRef}
                   >
-                    {disponibilidad.map((option, index) => (
+                    {disponibilidades.map((option, index) => (
                       <li
                         style={styles.li}
                         key={index}
@@ -551,6 +611,7 @@ function RegisterCv() {
                   placeholder="Seleccione la vacante de empleo"
                   onClick={() => toggleDropdown("empleo")}
                   value={selectedEmpleo}
+                  onChange={(e) => selectedEmpleo(e.target.value)}
                 />
                 {isOpenEmpleo && (
                   <ul
@@ -583,6 +644,8 @@ function RegisterCv() {
                 id="aniosExperiencia"
                 name="aniosExperiencia"
                 placeholder="Años de experiencia"
+                value={aniosExperiencia}
+                onChange={(e) => setAniosExperiencia(e.target.value)}
               />
             </div>
           </div>
@@ -599,7 +662,10 @@ function RegisterCv() {
                 name="expectativaSalario"
                 placeholder="$"
                 value={expectativaSalario}
-                onChange={handleExpectativaSalarioChange}
+                onChange={
+                  ((e) => setExpectativaSalario(e.target.value),
+                  handleExpectativaSalarioChange)
+                }
               />
             </div>
           </div>
@@ -614,6 +680,8 @@ function RegisterCv() {
                 rows="3"
                 placeholder="Resumen"
                 autoComplete="off"
+                value={resumen}
+                onChange={(e) => setResumen(e.target.value)}
               ></textarea>
             </div>
           </div>
@@ -996,6 +1064,9 @@ function RegisterCv() {
                       onClick={() => toggleDropdown("sistemasOperativos")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
                       value={selectedSistemasOperativos.join(", ")} // Mostrar los elementos separados por comas
                       readOnly
+                      onChange={(e) =>
+                        setSelectedSistemasOperativos(e.target.value)
+                      }
                     />{" "}
                     {isOpenSistemasOperativos && (
                       <ul
@@ -1023,7 +1094,6 @@ function RegisterCv() {
                     )}
                   </div>
                 </div>
-
                 <div className="col-lg-6 mb-3">
                   <label htmlFor="lenguajesProgramacion">
                     Lenguajes de programación
@@ -1037,6 +1107,9 @@ function RegisterCv() {
                       placeholder="Seleccione los lenguajes de programación que domina"
                       onClick={() => toggleDropdown("lenguajesProgramacion")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
                       value={selectedLenguajesProgramacion.join(", ")} // Mostrar los elementos separados por comas
+                      onChange={(e) =>
+                        setSelectedLenguajesProgramacion(e.target.value)
+                      }
                       readOnly
                     />{" "}
                     {isOpenLenguajesProgramacion && (
@@ -1081,6 +1154,7 @@ function RegisterCv() {
                       placeholder="Seleccione las herramientas de programación que domina"
                       onClick={() => toggleDropdown("tools")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
                       value={selectedTools.join(", ")} // Mostrar los elementos separados por comas
+                      onChange={(e) => setSelectetTools(e.target.value)}
                       readOnly
                     />
                     {isOpenTools && (
@@ -1116,6 +1190,7 @@ function RegisterCv() {
                       placeholder="Seleccione las librerias que domina"
                       onClick={() => toggleDropdown("librerias")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
                       value={selectedLibrerias.join(", ")} // Mostrar los elementos separados por comas
+                      onChange={(e) => setSelectedLibrerias(e.target.value)}
                       readOnly
                     />
                     {isOpenLibrerias && (
@@ -1156,6 +1231,7 @@ function RegisterCv() {
                       placeholder="Seleccione las bases de datos que domina"
                       onClick={() => toggleDropdown("dataBases")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
                       value={selectedDataBases.join(", ")} // Mostrar los elementos separados por comas
+                      onChange={(e) => setSelectedDataBases(e.target.value)}
                       readOnly
                     />
                     {isOpenDataBases && (
@@ -1194,6 +1270,7 @@ function RegisterCv() {
                       placeholder="Seleccione las nubes que domina"
                       onClick={() => toggleDropdown("cloud")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
                       value={selectedCloud.join(", ")} // Mostrar los elementos separados por comas
+                      onChange={(e) => setSelectedCloud(e.target.value)}
                       readOnly
                     />
                     {isOpenCloud && (
@@ -1238,6 +1315,7 @@ function RegisterCv() {
                         placeholder="Nivel de español"
                         onClick={() => toggleDropdown("espanol")}
                         value={selectedEspanol}
+                        onChange={(e) => setSelectedEspanol(e.target.value)}
                         readOnly
                       />
                       {isOpenEspanol && (
@@ -1273,6 +1351,7 @@ function RegisterCv() {
                         placeholder="Nivel de ingles"
                         onClick={() => toggleDropdown("ingles")}
                         value={selectedIngles}
+                        onChange={(e) => setSelectedIngles(e.target.value)}
                         readOnly
                       />
                       {isOpenIngles && (
@@ -1301,7 +1380,7 @@ function RegisterCv() {
           </div>
 
           <div className="col d-flex justify-content-center align-items-center mb-5 mt-5">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" className="btn btn-primary">
               Enviar Datos
             </button>
           </div>
@@ -1310,6 +1389,5 @@ function RegisterCv() {
       <Footer />
     </>
   );
-}
-
+};
 export default RegisterCv;

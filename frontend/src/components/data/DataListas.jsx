@@ -272,7 +272,7 @@ export const countries = [
 ];
 
 //arreglo con textos de disponibilidad
-export const disponibilidad = [
+export const disponibilidades = [
   "Inmediato",
   "1 semana",
   "2 semanas",
