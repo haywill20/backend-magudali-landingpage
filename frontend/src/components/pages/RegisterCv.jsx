@@ -20,6 +20,7 @@ import {
   cloud,
   niveles,
 } from "../data/DataListas";
+import { Link } from "react-router-dom";
 
 const styles = {
   ul: {
@@ -77,6 +78,7 @@ const RegisterCv = () => {
     const res = await axios.get(URIempleos);
     setEmpleos(res.data);
   };
+  const [mostrarModal, setMostrarModal] = useState(false);
 
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
@@ -147,6 +149,30 @@ const RegisterCv = () => {
       institucionCertificacion: "",
     },
   ]);
+
+  const limpiarFormulario = () => {
+    setNombre("");
+    setApellido("");
+    setCorreo("");
+    setTelefono("");
+    setSelectedCountry("");
+    setSelectedDisponibilidad("");
+    setSelectedEmpleo("");
+    setAniosExperiencia("");
+    setExpectativaSalario("");
+    setResumen("");
+    setEducacionFields("");
+    setExperienciaFields("");
+    setCertificacionFields("");
+    setSelectedSistemasOperativos("");
+    setSelectedLenguajesProgramacion("");
+    setSelectetTools("");
+    setSelectedLibrerias("");
+    setSelectedDataBases("");
+    setSelectedCloud("");
+    setSelectedEspanol("");
+    setSelectedIngles("");
+  };
 
   //procedimiento para guardar los datos
   const guardar = async (e) => {
@@ -221,7 +247,7 @@ const RegisterCv = () => {
         // Datos enviados con éxito
         console.log("Datos generales enviados con éxito");
         // Muestra un mensaje al usuario
-        alert("Datos generales enviados con éxito");
+        /*         alert("Datos generales enviados con éxito"); */
 
         // Capturar el id de los datos generales
         const idDatosGenerales = resDatosGenerales.data.id;
@@ -240,8 +266,8 @@ const RegisterCv = () => {
 
         if (resEducacion.status === 200) {
           console.log("Datos de educación enviados con éxito");
-          alert("Datos de educación enviados con éxito");
-
+          /*           alert("Datos de educación enviados con éxito");
+           */
           const experienciaDataConId = experienciaData.map((ed) => ({
             ...ed,
             datosGenerales_id: idDatosGenerales, // Agregar el id de datos generales
@@ -255,8 +281,8 @@ const RegisterCv = () => {
 
           if (resExperiencia.status === 200) {
             console.log("Datos de experiencias laborales enviados con éxito");
-            alert("Datos de experiencias laborales enviados con éxito");
-
+            /*             alert("Datos de experiencias laborales enviados con éxito");
+             */
             const certificacionDataConId = certificacionData.map((ed) => ({
               ...ed,
               datosGenerales_id: idDatosGenerales,
@@ -271,7 +297,17 @@ const RegisterCv = () => {
 
             if (resCertificacion.status === 200) {
               console.log("Datos de certificaciones enviados con éxito");
-              alert("Datos de certificaciones enviados con éxito");
+              /*               alert("Datos de certificaciones enviados con éxito");
+               */
+
+              //hacemos scrool al encabezado de la pagina
+              window.scrollTo(0, 0);
+
+              //funcion para limpiar el formulario
+              limpiarFormulario();
+
+              // Mostrar la ventana modal
+              setMostrarModal(true);
             } else {
               console.error("Error al enviar datos de certificaciones");
               alert("Error al enviar datos de certificciones");
@@ -308,6 +344,10 @@ const RegisterCv = () => {
       alert("Error al enviar los datossss");
     }
   };
+
+  function cerrarModal() {
+    setMostrarModal(false);
+  }
 
   // Controlador de eventos para el campo de texto de expectativa salarial
   const handleExpectativaSalarioChange = (event) => {
@@ -581,6 +621,39 @@ const RegisterCv = () => {
         </div>
       </section>
       <div className="container mt-5">
+        {mostrarModal && (
+          <div className="modal d-block" tabIndex="-1" role="dialog">
+            <div className="modal-dialog modal-dialog-centered" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Envió exitoso</h5>
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                    onClick={cerrarModal}
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  Los datos fueron enviados correctamente
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={cerrarModal}
+                  >
+                    Cerrar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         <form onSubmit={guardar} id="formulario">
           <h2 style={styles.datosGeneralesColor}>Datos Generales</h2>
           <br />
