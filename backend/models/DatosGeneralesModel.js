@@ -5,9 +5,9 @@ import db from "../database/db.js";
 import { DataTypes } from "sequelize";
 
 const DatosGeneralesModel = db.define("datos_generales", {
-  correo: { type: DataTypes.STRING },
   nombre: { type: DataTypes.STRING },
   apellido: { type: DataTypes.STRING },
+  correo: { type: DataTypes.STRING },
   cod: { type: DataTypes.STRING },
   telefono: { type: DataTypes.STRING },
   pais: { type: DataTypes.STRING },

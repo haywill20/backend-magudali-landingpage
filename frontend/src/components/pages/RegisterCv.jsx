@@ -166,27 +166,57 @@ const RegisterCv = () => {
 
     const cloudString = selectedCloud.join(", ");
 
-    await axios.post(URIdatosgenerales, {
-      nombre: nombre,
-      apellido: apellido,
-      correo: correo,
-      cod: cod,
-      telefono: telefono,
-      pais: selectedCountry,
-      disponibilidad: selectedDisponibilidad,
-      vacante: selectedEmpleo,
-      aniosExperiencia: aniosExperiencia,
-      expectativaSalario: expectativaSalario,
-      resumen: resumen,
-      sistemasOperativos: sistemasOperativosString,
-      lenguajesProg: lenguajesProgramacionString,
-      herramientasProg: herramientasProgramacionString,
-      librerias: libreriasString,
-      basesDatos: dataBaseString,
-      clouds: cloudString,
-      español: selectedEspanol,
-      ingles: selectedIngles,
-    });
+    try {
+      const res = await axios.post(URIdatosgenerales, {
+        nombre: nombre,
+        apellido: apellido,
+        correo: correo,
+        cod: cod,
+        telefono: telefono,
+        pais: selectedCountry,
+        disponibilidad: selectedDisponibilidad,
+        vacante: selectedEmpleo,
+        aniosExperiencia: aniosExperiencia,
+        expectativaSalario: expectativaSalario,
+        resumen: resumen,
+        sistemasOperativos: sistemasOperativosString,
+        lenguajesProg: lenguajesProgramacionString,
+        herramientasProg: herramientasProgramacionString,
+        librerias: libreriasString,
+        basesDatos: dataBaseString,
+        clouds: cloudString,
+        español: selectedEspanol,
+        ingles: selectedIngles,
+      });
+
+      if (res.status === 200) {
+        // Datos enviados con éxito
+        console.log("Datos enviados con éxito");
+        // Muestra un mensaje al usuario
+        alert("Datos enviados con éxito");
+      } else if (res.status === 500) {
+        // Error interno del servidor (error 500)
+        console.error(
+          "Error interno del servidor al enviar los datos:",
+          res.data
+        );
+        // Muestra un mensaje de error al usuario
+        alert("Error interno del servidor al enviar los datos");
+      } else {
+        // Otros códigos de estado
+        console.error(
+          "Error inesperado al enviar los datos. Código de estado:",
+          res.status
+        );
+        // Muestra un mensaje de error al usuario
+        alert("Error inesperado al enviar los datos.");
+      }
+    } catch (error) {
+      // Error de red u otros errores
+      console.error("Error al enviar los datos:", error);
+      // Muestra un mensaje de error al usuario
+      alert("Error al enviar los datossss");
+    }
   };
 
   // Controlador de eventos para el campo de texto de expectativa salarial
