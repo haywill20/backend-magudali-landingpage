@@ -4,8 +4,8 @@ import db from "../database/db.js";
 //importamos sequelize
 import { DataTypes } from "sequelize";
 
-const ExperienciasLaboralesModel = db.define("experiencias_laborales", {
-  candidato_id: { type: DataTypes.INTEGER },
+const ExperienciaModel = db.define("experiencias_laborales", {
+  datosGenerales_id: { type: DataTypes.INTEGER },
   empresa: { type: DataTypes.STRING },
   mesInicioExperiencia: { type: DataTypes.STRING },
   anioInicioExperiencia: { type: DataTypes.STRING },
@@ -16,4 +16,4 @@ const ExperienciasLaboralesModel = db.define("experiencias_laborales", {
   tecnologias: { type: DataTypes.STRING },
 });
 
-export default ExperienciasLaboralesModel;
+export default ExperienciaModel;

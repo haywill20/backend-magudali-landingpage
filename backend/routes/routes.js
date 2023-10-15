@@ -1,8 +1,8 @@
 import express from "express";
-import { createCertificacion } from "../controllers/CertificacionesController.js";
+import { createCertificacion } from "../controllers/CertificacionController.js";
 import { createDatoGeneral } from "../controllers/DatosGeneralesController.js";
 import { createEducacion } from "../controllers/EducacionController.js";
-import { createExperienciaLaboral } from "../controllers/ExperienciasLaboralesController.js";
+import { createExperiencia } from "../controllers/ExperienciaController.js";
 import { getAllEmpleos, getEmpleo } from "../controllers/EmpleoController.js";
 
 const router = express.Router();
@@ -21,6 +21,6 @@ router.post("/educaciones", createEducacion);
 router.post("/certificaciones", createCertificacion);
 
 //rutas para experiencias Laborales
-router.post("/experienciaslaborales", createExperienciaLaboral);
+router.post("/experienciaslaborales", createExperiencia);
 
 export default router;

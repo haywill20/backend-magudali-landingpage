@@ -5,7 +5,7 @@ import db from "../database/db.js";
 import { DataTypes } from "sequelize";
 
 const EducacionModel = db.define("educaciones", {
-  candidato_id: { type: DataTypes.INTEGER },
+  datosGenerales_id: { type: DataTypes.INTEGER },
   institucionEducacion: { type: DataTypes.STRING },
   mesFinEducacion: { type: DataTypes.STRING },
   anioFinEducacion: { type: DataTypes.STRING },

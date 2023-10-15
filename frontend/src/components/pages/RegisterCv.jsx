@@ -166,8 +166,36 @@ const RegisterCv = () => {
 
     const cloudString = selectedCloud.join(", ");
 
+    // Capturar los datos de educación en un array
+    const educacionData = educacionFields.map((field) => ({
+      institucion: field.institucion,
+      mesFinEducacion: field.mesFinEducacion,
+      anioFinEducacion: field.anioFinEducacion,
+      carrera: field.carrera,
+    }));
+
+    // Capturar los datos de experiencia laboral en un array
+    const experienciaData = experienciaFields.map((field) => ({
+      empresaName: field.empresaName,
+      mesInicioExperiencia: field.mesInicioExperiencia,
+      anioInicioExperiencia: field.anioFinExperiencia,
+      mesFinExperiencia: field.mesFinExperiencia,
+      anioFinExperiencia: field.anioFinExperiencia,
+      cargo: field.cargo,
+      actividades: field.actividades,
+      tecnologias: field.tecnologias,
+    }));
+
+    //capturar los datos de certificaciones
+    const certificacionData = certificacionFields.map((field) => ({
+      certificacionName: field.certificacionName,
+      mesFinCertificacion: field.mesFinCertificacion,
+      anioFinCertificacion: field.anioFinCertificacion,
+      institucion: field.institucionCertificacion,
+    }));
+
     try {
-      const res = await axios.post(URIdatosgenerales, {
+      const resDatosGenerales = await axios.post(URIdatosgenerales, {
         nombre: nombre,
         apellido: apellido,
         correo: correo,
@@ -189,12 +217,74 @@ const RegisterCv = () => {
         ingles: selectedIngles,
       });
 
-      if (res.status === 200) {
+      if (resDatosGenerales.status === 200) {
         // Datos enviados con éxito
-        console.log("Datos enviados con éxito");
+        console.log("Datos generales enviados con éxito");
         // Muestra un mensaje al usuario
-        alert("Datos enviados con éxito");
-      } else if (res.status === 500) {
+        alert("Datos generales enviados con éxito");
+
+        // Capturar el id de los datos generales
+        const idDatosGenerales = resDatosGenerales.data.id;
+
+        // Ahora, envía los datos de educación junto con el id de datos generales
+        const educacionDataConId = educacionData.map((ed) => ({
+          ...ed,
+          datosGenerales_id: idDatosGenerales, // Agregar el id de datos generales
+        }));
+
+        const resEducacion = await axios.post(
+          URIeducaciones,
+          educacionDataConId
+        );
+        console.log("resEducacion:", educacionDataConId);
+
+        if (resEducacion.status === 200) {
+          console.log("Datos de educación enviados con éxito");
+          alert("Datos de educación enviados con éxito");
+
+          const experienciaDataConId = experienciaData.map((ed) => ({
+            ...ed,
+            datosGenerales_id: idDatosGenerales, // Agregar el id de datos generales
+          }));
+
+          const resExperiencia = await axios.post(
+            URIexperienciaslaborales,
+            experienciaDataConId
+          );
+          console.log("resExperiencias:", experienciaDataConId);
+
+          if (resExperiencia.status === 200) {
+            console.log("Datos de experiencias laborales enviados con éxito");
+            alert("Datos de experiencias laborales enviados con éxito");
+
+            const certificacionDataConId = certificacionData.map((ed) => ({
+              ...ed,
+              datosGenerales_id: idDatosGenerales,
+            }));
+
+            const resCertificacion = await axios.post(
+              URIcertificaciones,
+              certificacionDataConId
+            );
+
+            console.log("resCertificaciones:", certificacionDataConId);
+
+            if (resCertificacion.status === 200) {
+              console.log("Datos de certificaciones enviados con éxito");
+              alert("Datos de certificaciones enviados con éxito");
+            } else {
+              console.error("Error al enviar datos de certificaciones");
+              alert("Error al enviar datos de certificciones");
+            }
+          } else {
+            console.error("Error al enviar datos de experiencias laborales");
+            alert("Error al enviar datos de experiencias laborales");
+          }
+        } else {
+          console.error("Error al enviar datos de educación");
+          alert("Error al enviar datos de educación");
+        }
+      } else if (resDatosGenerales.status === 500) {
         // Error interno del servidor (error 500)
         console.error(
           "Error interno del servidor al enviar los datos:",
@@ -206,7 +296,7 @@ const RegisterCv = () => {
         // Otros códigos de estado
         console.error(
           "Error inesperado al enviar los datos. Código de estado:",
-          res.status
+          resDatosGenerales.status
         );
         // Muestra un mensaje de error al usuario
         alert("Error inesperado al enviar los datos.");
@@ -382,6 +472,13 @@ const RegisterCv = () => {
     setEducacionFields(updatedEducacionFields);
   };
 
+  const handleInputChangeEducacion = (e, index, fieldName) => {
+    const value = e.target.value;
+    const newEducacionFields = [...educacionFields];
+    newEducacionFields[index][fieldName] = value;
+    setEducacionFields(newEducacionFields);
+  };
+
   // Controlador de eventos para agregar un nuevo campo de experiencia laborales
   const handleAgregarExperiencia = () => {
     const newId = experienciaFields.length + 1;
@@ -408,6 +505,13 @@ const RegisterCv = () => {
     setExperienciaFields(updatedExperienciaFields);
   };
 
+  const handleInputChangeExperiencia = (e, index, fieldName) => {
+    const value = e.target.value;
+    const newExperienciaFields = [...experienciaFields];
+    newExperienciaFields[index][fieldName] = value;
+    setExperienciaFields(newExperienciaFields);
+  };
+
   // Controlador de eventos para agregar un nuevo campo de Certificación
   const handleAgregarCertificacion = () => {
     const newId = certificacionFields.length + 1;
@@ -429,6 +533,13 @@ const RegisterCv = () => {
       (field) => field.id !== id
     );
     setCertificacionFields(updatedCertificacionFields);
+  };
+
+  const handleInputChangeCertificacion = (e, index, fieldName) => {
+    const value = e.target.value;
+    const newCertificacionFields = [...certificacionFields];
+    newCertificacionFields[index][fieldName] = value;
+    setCertificacionFields(newCertificacionFields);
   };
 
   // Agregar el manejador de clic global cuando el componente se monta
@@ -731,6 +842,10 @@ const RegisterCv = () => {
                       className="form-control"
                       name={`institucion${index}`}
                       placeholder="Ingrese el nombre de la institución"
+                      value={field.institucion}
+                      onChange={(e) =>
+                        handleInputChangeEducacion(e, index, "institucion")
+                      }
                     />
                   </div>
                   <div className="col-lg-3 mb-3">
@@ -739,8 +854,12 @@ const RegisterCv = () => {
                     </label>
                     <select
                       className="form-control"
-                      id={`mesInicioEducacion${index}`}
+                      id={`mesFinEducacion${index}`}
                       name={`mesFinEducacion${index}`}
+                      value={field.mesFinEducacion}
+                      onChange={(e) =>
+                        handleInputChangeEducacion(e, index, "mesFinEducacion")
+                      }
                     >
                       <option value="">Seleccione el mes</option>
                       <option value="Ene">Enero</option>
@@ -767,6 +886,10 @@ const RegisterCv = () => {
                       className="form-control"
                       id={`anioFinEducacion${index}`}
                       name={`anioFinEducacion${index}`}
+                      value={field.anioFinEducacion}
+                      onChange={(e) =>
+                        handleInputChangeEducacion(e, index, "anioFinEducacion")
+                      }
                     >
                       <option value="">Seleccione el año</option>
                       {generateYearsRange().map((year) => (
@@ -784,6 +907,10 @@ const RegisterCv = () => {
                       className="form-control"
                       name={`carrera${index}`}
                       placeholder="Ingrese la carrera cursada"
+                      value={field.carrera}
+                      onChange={(e) =>
+                        handleInputChangeEducacion(e, index, "carrera")
+                      }
                     />
                   </div>
                   <div className="col-lg-12 mb-3">
@@ -825,6 +952,10 @@ const RegisterCv = () => {
                       type="text"
                       className="form-control"
                       name={`empresaName${index}`}
+                      value={field.empresaName}
+                      onChange={(e) =>
+                        handleInputChangeExperiencia(e, index, "empresaName")
+                      }
                       placeholder="Ingrese el nombre de la empresa"
                     />
                   </div>
@@ -835,6 +966,14 @@ const RegisterCv = () => {
                     <select
                       className="form-control"
                       name={`mesInicioExperiencia${index}`}
+                      value={field.mesInicioExperiencia}
+                      onChange={(e) =>
+                        handleInputChangeExperiencia(
+                          e,
+                          index,
+                          "mesInicioExperiencia"
+                        )
+                      }
                     >
                       <option value="">Mes de Inicio</option>
                       <option value="Ene">Enero</option>
@@ -859,6 +998,14 @@ const RegisterCv = () => {
                       className="form-control"
                       id={`anioInicioExperiencia${index}`}
                       name={`anioInicioExperiencia${index}`}
+                      value={field.anioInicioExperiencia}
+                      onChange={(e) =>
+                        handleInputChangeExperiencia(
+                          e,
+                          index,
+                          "anioInicioExperiencia"
+                        )
+                      }
                     >
                       {" "}
                       <option value="">Año de inicio</option>
@@ -876,6 +1023,14 @@ const RegisterCv = () => {
                     <select
                       className="form-control"
                       name={`mesFinExperiencia${index}`}
+                      value={field.mesFinExperiencia}
+                      onChange={(e) =>
+                        handleInputChangeExperiencia(
+                          e,
+                          index,
+                          "mesFinExperiencia"
+                        )
+                      }
                     >
                       <option value="">Mes Fin</option>
                       <option value="Ene">Enero</option>
@@ -900,6 +1055,14 @@ const RegisterCv = () => {
                       className="form-control"
                       id={`anioFinExperiencia${index}`}
                       name={`anioFinExperiencia${index}`}
+                      value={field.anioFinExperiencia}
+                      onChange={(e) =>
+                        handleInputChangeExperiencia(
+                          e,
+                          index,
+                          "anioFinExperiencia"
+                        )
+                      }
                     >
                       {" "}
                       <option value="">Año de inicio</option>
@@ -919,6 +1082,10 @@ const RegisterCv = () => {
                       type="text"
                       className="form-control"
                       name={`cargo${index}`}
+                      value={field.cargo}
+                      onChange={(e) =>
+                        handleInputChangeExperiencia(e, index, "cargo")
+                      }
                       placeholder="Ingrese el cargo que desempeñó"
                     ></input>
                   </div>
@@ -933,6 +1100,10 @@ const RegisterCv = () => {
                       className="form-control"
                       name={`actividades${index}`}
                       rows="3"
+                      value={field.actividades}
+                      onChange={(e) =>
+                        handleInputChangeExperiencia(e, index, "actividades")
+                      }
                       placeholder="Ingrese las actividades realizadas"
                     ></textarea>
                   </div>
@@ -947,6 +1118,10 @@ const RegisterCv = () => {
                       type="text"
                       className="form-control"
                       name={`tecnologias${index}`}
+                      value={field.tecnologias}
+                      onChange={(e) =>
+                        handleInputChangeExperiencia(e, index, "tecnologias")
+                      }
                       placeholder="Ingrese las tecnologias"
                     ></input>
                   </div>
@@ -985,13 +1160,21 @@ const RegisterCv = () => {
                 <div className="row mt-3">
                   <div className="col-lg-6 mb-3">
                     <label htmlFor={`certificacionName${index}`}>
-                      Nombre de Cerificación:
+                      Nombre de Certificación:
                     </label>
                     <input
                       type="text"
                       className="form-control"
                       name={`certificacionName${index}`}
                       placeholder="Ingrese el nombre de la certificación"
+                      value={field.certificacionName}
+                      onChange={(e) =>
+                        handleInputChangeCertificacion(
+                          e,
+                          index,
+                          "certificacionName"
+                        )
+                      }
                     ></input>
                   </div>
                   <div className="col-lg-3 mb-3">
@@ -1001,6 +1184,14 @@ const RegisterCv = () => {
                     <select
                       className="form-control"
                       name={`mesFinCertificacion${index}`}
+                      value={field.mesFinCertificacion}
+                      onChange={(e) =>
+                        handleInputChangeCertificacion(
+                          e,
+                          index,
+                          "mesFinCertificacion"
+                        )
+                      }
                     >
                       <option value="">Seleccione el mes</option>
                       <option value="Ene">Enero</option>
@@ -1027,6 +1218,14 @@ const RegisterCv = () => {
                       className="form-control"
                       name={`anioFinCertificacion${index}`}
                       placeholder="Año de Finalización"
+                      value={field.anioFinCertificacion}
+                      onChange={(e) =>
+                        handleInputChangeCertificacion(
+                          e,
+                          index,
+                          "anioFinCertificacion"
+                        )
+                      }
                     >
                       {" "}
                       {generateYearsRange().map((year) => (
@@ -1047,6 +1246,14 @@ const RegisterCv = () => {
                       className="form-control"
                       name={`institucionCertificacion${index}`}
                       placeholder="Ingrese el nombre de la institución"
+                      value={field.institucionCertificacion}
+                      onChange={(e) =>
+                        handleInputChangeCertificacion(
+                          e,
+                          index,
+                          "institucionCertificacion"
+                        )
+                      }
                     />
                   </div>
                   <div className="col-lg-12 mb-3">
