@@ -113,10 +113,6 @@ const RegisterCv = () => {
   const [isOpenIngles, setIsOpenIngles] = useState(false);
   const [selectedIngles, setSelectedIngles] = useState("");
 
-  const [educacionFields, setEducacionFields] = useState([
-    { institucion: "", mesFinEducacion: "", anioFinEducacion: "", carrera: "" },
-  ]);
-
   const [isOpenSistemasOperativos, setIsOpenSistemasOperativos] =
     useState(false);
   const [selectedSistemasOperativos, setSelectedSistemasOperativos] = useState(
@@ -127,6 +123,10 @@ const RegisterCv = () => {
     useState(false);
   const [selectedLenguajesProgramacion, setSelectedLenguajesProgramacion] =
     useState([]);
+
+  const [educacionFields, setEducacionFields] = useState([
+    { institucion: "", mesFinEducacion: "", anioFinEducacion: "", carrera: "" },
+  ]);
 
   const [experienciaFields, setExperienciaFields] = useState([
     {
@@ -161,15 +161,15 @@ const RegisterCv = () => {
     setAniosExperiencia("");
     setExpectativaSalario("");
     setResumen("");
-    setEducacionFields("");
-    setExperienciaFields("");
-    setCertificacionFields("");
-    setSelectedSistemasOperativos("");
-    setSelectedLenguajesProgramacion("");
-    setSelectetTools("");
-    setSelectedLibrerias("");
-    setSelectedDataBases("");
-    setSelectedCloud("");
+    setEducacionFields([]);
+    setExperienciaFields([]);
+    setCertificacionFields([]);
+    setSelectedSistemasOperativos([]);
+    setSelectedLenguajesProgramacion([]);
+    setSelectetTools([]);
+    setSelectedLibrerias([]);
+    setSelectedDataBases([]);
+    setSelectedCloud([]);
     setSelectedEspanol("");
     setSelectedIngles("");
   };
