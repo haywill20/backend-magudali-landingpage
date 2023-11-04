@@ -245,7 +245,7 @@ const RegisterCv = () => {
 
       if (resDatosGenerales.status === 200) {
         // Datos enviados con éxito
-        console.log("Datos generales enviados con éxito");
+        console.log("Datos generales enviados con éxito", resDatosGenerales);
         // Muestra un mensaje al usuario
         /*         alert("Datos generales enviados con éxito"); */
 
