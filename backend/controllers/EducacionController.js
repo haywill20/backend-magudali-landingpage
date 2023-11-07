@@ -6,6 +6,12 @@ export const createEducacion = async (req, res) => {
   try {
     const educaciones = req.body; // El arreglo de objetos
 
+    if (educaciones.length === 0) {
+      return res.status(400).json({
+        message: "El arreglo de educación no puede estar vacío",
+      });
+    }
+
     educaciones.forEach(async (educacion) => {
       // Insertar cada elemento en la base de datos
       await EducacionModel.create({

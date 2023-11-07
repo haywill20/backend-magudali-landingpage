@@ -5,18 +5,18 @@ import db from "../database/db.js";
 import { DataTypes } from "sequelize";
 
 const EmpleoModel = db.define("empleos", {
-  nombre: { type: DataTypes.STRING },
-  resumen: { type: DataTypes.STRING },
-  descripcion: { type: DataTypes.STRING },
-  perfil: { type: DataTypes.STRING },
-  responsabilidades: { type: DataTypes.STRING },
-  pago: { type: DataTypes.STRING },
-  idioma: { type: DataTypes.STRING },
-  prioridad: { type: DataTypes.STRING },
-  tecnologias: { type: DataTypes.STRING },
-  tiempo: { type: DataTypes.STRING },
-  icon: { type: DataTypes.STRING },
-  estilo: { type: DataTypes.STRING },
+  nombre: { type: DataTypes.STRING, required: true },
+  resumen: { type: DataTypes.STRING, required: true },
+  descripcion: { type: DataTypes.STRING, required: true },
+  perfil: { type: DataTypes.STRING, required: true },
+  responsabilidades: { type: DataTypes.STRING, required: true },
+  pago: { type: DataTypes.STRING, required: true },
+  idioma: { type: DataTypes.STRING, required: true },
+  prioridad: { type: DataTypes.STRING, required: true },
+  tecnologias: { type: DataTypes.STRING, required: true },
+  tiempo: { type: DataTypes.STRING, required: true },
+  icon: { type: DataTypes.STRING, required: true },
+  estilo: { type: DataTypes.STRING, required: true },
 });
 
 export default EmpleoModel;

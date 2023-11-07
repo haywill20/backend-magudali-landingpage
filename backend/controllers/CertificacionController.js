@@ -5,6 +5,12 @@ export const createCertificacion = async (req, res) => {
   try {
     const certificaciones = req.body; //El arreglo de objetos
 
+    if (certificaciones.length === 0) {
+      return res.status(400).json({
+        message: "El arreglo de certificaciones no puede estar vacio",
+      });
+    }
+
     certificaciones.forEach(async (certificacion) => {
       //insertar cada elemento en la base de datos
       await CertificacionModel.create({

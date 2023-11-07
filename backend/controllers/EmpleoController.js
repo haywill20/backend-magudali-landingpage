@@ -9,22 +9,33 @@ export const getAllEmpleos = async (req, res) => {
     const empleos = await EmpleoModel.findAll();
     res.json(empleos);
   } catch (error) {
-    res.json({ message: error.message });
+    res.status(500).json({ message: "Error al obtener los empleos", error: error.message });
   }
 };
 
 //Mostrar una vacante
 
 export const getEmpleo = async (req, res) => {
+  const empleoId = req.params.id;
+
+  if (!empleoId || isNaN(parseInt(empleoId))) {
+    return res.status(400).json({ message: "ID de empleo no válido" });
+  }
+
   try {
     const empleo = await EmpleoModel.findAll({
       where: {
-        id: req.params.id,
+        id: empleoId,
       },
     });
+
+    if (!empleo) {
+      return res.status(404).json({ message: "Empleo no encontrado" });
+    }
+
     res.json(empleo[0]);
     console.log(res);
   } catch (error) {
-    res.json({ message: error.message });
+    res.status(500).json({ message: "Error al obtener el empleo", error: error.message });
   }
 };

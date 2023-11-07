@@ -6,6 +6,10 @@ export const createExperiencia = async (req, res) => {
   try {
     const experiencias = req.body; // El arreglo de objetos
 
+    if (!Array.isArray(experiencias) || experiencias.length === 0) {
+      return res.status(400).json({ error: "Datos de experiencia laboral no válidos" });
+    }
+
     experiencias.forEach(async (experiencia) => {
       //insertar cada elemento en la base de datos
 

@@ -5,11 +5,11 @@ import db from "../database/db.js";
 import { DataTypes } from "sequelize";
 
 const CertificacionModel = db.define("certificaciones", {
-  datosGenerales_id: { type: DataTypes.INTEGER },
-  certificacion: { type: DataTypes.STRING },
-  mesFinCertificacion: { type: DataTypes.STRING },
-  anioFinCertificacion: { type: DataTypes.STRING },
-  institucionCertificacion: { type: DataTypes.STRING },
+  datosGenerales_id: { type: DataTypes.INTEGER, required: true },
+  certificacion: { type: DataTypes.STRING, required: true },
+  mesFinCertificacion: { type: DataTypes.STRING, required: true },
+  anioFinCertificacion: { type: DataTypes.STRING, required: true },
+  institucionCertificacion: { type: DataTypes.STRING, required: true },
 });
 
 export default CertificacionModel;
