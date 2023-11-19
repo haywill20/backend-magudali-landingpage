@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
-import thumb from "../../assets/images/image-job-details.png";
+import shape15 from "../../assets/images/shape/shape-15.png";
+import shape14 from "../../assets/images/shape/shape-14.png";
+import shape13 from "../../assets/images/shape/shape-13.png";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { empleos } from "../data/DataListas";
@@ -32,17 +34,7 @@ const JobDetails = () => {
     <>
       <Header />
 
-      <div className="appie-page-title-area">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="appie-page-title-item">
-                <h3 className="title">Detalles de la vacante</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div className="appie-page-title-area" style={{ height: "100px" }}></div>
       <section className="appie-features-area-2 pt-90 pb-100" id="features">
         <div className="container">
           <div className="row justify-content-center">
@@ -104,13 +96,13 @@ const JobDetails = () => {
         </div>
 
         <div className="features-shape-1">
-          <img src="assets/images/shape/shape-15.png" alt="" />
+          <img src={shape15} alt="" />
         </div>
         <div className="features-shape-2">
-          <img src="assets/images/shape/shape-14.png" alt="" />
+          <img src={shape14} alt="" />
         </div>
         <div className="features-shape-3">
-          <img src="assets/images/shape/shape-13.png" alt="" />
+          <img src={shape13} alt="" />
         </div>
       </section>
 
