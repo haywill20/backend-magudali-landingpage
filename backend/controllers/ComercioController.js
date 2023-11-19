@@ -1,5 +1,5 @@
 //importamos el modelo
-import ComercioModel from "../models/ComercioModel";
+import ComercioModel from "../models/ComercioModel.js";
 
 //metodo para Mostrar todos los comercios
 
