@@ -1,8 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import departamentosNicaragua from "../data/departamentos";
 import logo from "../../assets/images/logo.png";
-import home1 from "../../assets/images/pages/home1.png";
+import apiUrl from "../config/Config";
 import { Link } from "react-router-dom";
+
+import axios from "axios";
+
+/* const ImagenComercios = require.context(
+  "../../../../backend/uploads/comercios",
+  true
+); */
+
+const URIcomercios = `${apiUrl}/comercios/`;
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,6 +31,18 @@ function Header() {
   const handleMenuClickCobertura = () => {
     setMenuOpenCobertura(!menuOpenCobertura);
     setMenuOpenNegocios(false); // Cerrar Negocios
+  };
+
+  const [comercios, setComercios] = useState([]);
+
+  useEffect(() => {
+    getComercios();
+  }, []);
+
+  //Procedimiento para mostrar todos los comercios
+  const getComercios = async () => {
+    const res = await axios.get(URIcomercios);
+    setComercios(res.data);
   };
   return (
     <>
@@ -248,61 +269,17 @@ function Header() {
                         </ul>
                         <br />
                         <ul className="mega-menu-home">
-                          <li>
-                            <a href="/404">
-                              <img src={home1} alt="" /> Demo 2{" "}
-                            </a>
-                          </li>
-                          <li>
-                            <a href="/404">
-                              <img src={home1} alt="" /> Demo 3{" "}
-                            </a>
-                          </li>
-                          <li>
-                            <a href="/404">
-                              <img src={home1} alt="" /> Demo 4{" "}
-                            </a>
-                          </li>
-                          <li>
-                            <a href="/404">
-                              <img src={home1} alt="" /> Demo 5{" "}
-                            </a>
-                          </li>
-                          <li>
-                            <a href="/404">
-                              <img src={home1} alt="" /> Demo 6{" "}
-                            </a>
-                          </li>
-                          <li>
-                            <a href="/404">
-                              <img src={home1} alt="" /> Demo 7{" "}
-                            </a>
-                          </li>
-                          <li>
-                            <a href="/404">
-                              <img src={home1} alt="" /> Demo 8{" "}
-                            </a>
-                          </li>
-                          <li>
-                            <a href="/404">
-                              <img src={home1} alt="" /> Demo 9{" "}
-                            </a>
-                          </li>
-                          <li>
-                            <a href="/404">
-                              <img src={home1} alt="" /> Demo 10{" "}
-                            </a>
-                          </li>
-                          <li>
-                            <a href="/404">
-                              <img src={home1} alt="" /> Demo 11{" "}
-                            </a>
-                          </li>
-                          <li>
-                            <a href="/404">
-                              <img src={home1} alt="" /> Demo 12{" "}
-                            </a>
-                          </li>
+                          {comercios.map((comercio) => (
+                            <li key={comercio.id}>
+                              <a href="/404">
+                                <img
+                                  src={`${apiUrl}/images/${comercio.imagen}`}
+                                  alt=""
+                                />{" "}
+                                {comercio.nombre}{" "}
+                              </a>
+                            </li>
+                          ))}
                         </ul>
                       </div>
                     </li>

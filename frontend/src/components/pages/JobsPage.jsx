@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import Footer from "../common/Footer";
 import Header from "../common/Header";
 import Card from "../shared/CardJobs";
-
+import apiUrl from "../config/Config";
 import axios from "axios";
-const URI = "http://localhost:8000/empleos/";
+const URI = `${apiUrl}/empleos/`;
 
 const JobsPage = () => {
   const [empleos, setEmpleos] = useState([]);

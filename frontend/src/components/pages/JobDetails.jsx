@@ -7,9 +7,10 @@ import shape13 from "../../assets/images/shape/shape-13.png";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { empleos } from "../data/DataListas";
+import apiUrl from "../config/Config";
 import { Link } from "react-router-dom";
 
-const URI = "http://localhost:8000/empleos/";
+const URI = `${apiUrl}/empleos/`;
 
 const JobDetails = () => {
   const [empleo, setEmpleo] = useState({});

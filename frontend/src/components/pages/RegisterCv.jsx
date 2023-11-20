@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
+import apiUrl from "../config/Config";
 import axios from "axios";
-const URIempleos = "http://localhost:8000/empleos/";
-const URIdatosgenerales = "http://localhost:8000/datosgenerales/";
-const URIeducaciones = "http://localhost:8000/educaciones/";
-const URIcertificaciones = "http://localhost:8000/certificaciones/";
-const URIexperienciaslaborales = "http://localhost:8000/experienciaslaborales/";
+const URIempleos = `${apiUrl}/empleos/`;
+const URIdatosgenerales = `${apiUrl}/datosgenerales/`;
+const URIeducaciones = `${apiUrl}/educaciones/`;
+const URIcertificaciones = `${apiUrl}/certificaciones/`;
+const URIexperienciaslaborales = `${apiUrl}/experienciaslaborales/`;
 
-import Stepper from 'react-stepper-horizontal';
+import Stepper from "react-stepper-horizontal";
 
 import {
   countryCodes,
@@ -152,7 +153,7 @@ const RegisterCv = () => {
     },
   ]);
 
-  const [ activeStep, setActiveStep ] = useState(0);
+  const [activeStep, setActiveStep] = useState(0);
 
   const limpiarFormulario = () => {
     setNombre("");
@@ -614,9 +615,9 @@ const RegisterCv = () => {
   };
 
   const steps = [
-    { title: 'Datos generales' },
-    { title: 'Experciencias laborales' },
-    { title: 'Habilidades' },
+    { title: "Datos generales" },
+    { title: "Experciencias laborales" },
+    { title: "Habilidades" },
   ];
 
   // function getSectionComponent() {
@@ -649,13 +650,11 @@ const RegisterCv = () => {
       </section>
 
       <div>
-        <Stepper
-          steps={steps}
-          activeStep={activeStep}/>
-        <div className="container mt-5" style={{padding: '5 px'}}>
-        {activeStep === 0 && (
-          <div className="container mt-5">
-          <h2 style={styles.datosGeneralesColor}>Datos Generales</h2>
+        <Stepper steps={steps} activeStep={activeStep} />
+        <div className="container mt-5" style={{ padding: "5 px" }}>
+          {activeStep === 0 && (
+            <div className="container mt-5">
+              <h2 style={styles.datosGeneralesColor}>Datos Generales</h2>
               <br />
               <div className="row">
                 <div className="col-lg-3 mb-3">
@@ -669,12 +668,12 @@ const RegisterCv = () => {
                     id="nombre"
                     name="nombre"
                     placeholder="Ingrese su primer nombre"
-                    required  
+                    required
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
                   />
                 </div>
-    
+
                 <div className="col-lg-3 mb-3">
                   <label htmlFor="apellido" className="form-label">
                     Primer Apellido
@@ -690,7 +689,7 @@ const RegisterCv = () => {
                     onChange={(e) => setApellido(e.target.value)}
                   />
                 </div>
-    
+
                 <div className="col-lg-3 mb-3">
                   <label htmlFor="correo" className="form-label">
                     Correo
@@ -739,7 +738,7 @@ const RegisterCv = () => {
                   </div>
                 </div>
               </div>
-    
+
               <div className="row">
                 <div className="col-lg-3 mb-3">
                   <label htmlFor="pais" className="form-label">
@@ -778,7 +777,7 @@ const RegisterCv = () => {
                     )}
                   </div>
                 </div>
-    
+
                 <div className="col-lg-3 mb-3">
                   <label htmlFor="disponibilidad" className="form-label">
                     Disponibilidad
@@ -807,7 +806,9 @@ const RegisterCv = () => {
                             style={styles.li}
                             key={index}
                             className="list-item"
-                            onClick={() => handleSelect(option, "disponibilidad")}
+                            onClick={() =>
+                              handleSelect(option, "disponibilidad")
+                            }
                           >
                             {option}
                           </li>
@@ -816,7 +817,7 @@ const RegisterCv = () => {
                     )}
                   </div>
                 </div>
-    
+
                 <div className="col-lg-3 mb-3">
                   <label htmlFor="empleo" className="form-label">
                     Vacante de Empleo
@@ -845,7 +846,9 @@ const RegisterCv = () => {
                             style={styles.li}
                             key={empleo.id}
                             className="list-item"
-                            onClick={() => handleSelect(empleo.nombre, "empleo")}
+                            onClick={() =>
+                              handleSelect(empleo.nombre, "empleo")
+                            }
                           >
                             {empleo.nombre}
                           </li>
@@ -854,7 +857,7 @@ const RegisterCv = () => {
                     )}
                   </div>
                 </div>
-    
+
                 <div className="col-lg-3 mb-3">
                   <label htmlFor="aniosExperiencia" className="form-label">
                     Años de experiencia
@@ -871,7 +874,7 @@ const RegisterCv = () => {
                   />
                 </div>
               </div>
-    
+
               <div className="row">
                 <div className="col-lg-3 mb-3">
                   <label htmlFor="expectativa" className="form-label">
@@ -892,7 +895,7 @@ const RegisterCv = () => {
                   />
                 </div>
               </div>
-    
+
               <div className="row mb-4">
                 <div className="col mb-3">
                   <label htmlFor="resumen">Resumen:</label>
@@ -908,7 +911,7 @@ const RegisterCv = () => {
                   ></textarea>
                 </div>
               </div>
-    
+
               <h2 style={styles.educacionColor}>Educación</h2>
               <div id="educacion-container">
                 {educacionFields.map((field, index) => (
@@ -941,7 +944,11 @@ const RegisterCv = () => {
                           name={`mesFinEducacion${index}`}
                           value={field.mesFinEducacion}
                           onChange={(e) =>
-                            handleInputChangeEducacion(e, index, "mesFinEducacion")
+                            handleInputChangeEducacion(
+                              e,
+                              index,
+                              "mesFinEducacion"
+                            )
                           }
                         >
                           <option value="">Seleccione el mes</option>
@@ -957,7 +964,7 @@ const RegisterCv = () => {
                           <option value="Oct">Octubre</option>
                           <option value="Nov">Noviembre</option>
                           <option value="Dic">Diciembre</option>
-    
+
                           {/* Agrega opciones para otros meses aquí */}
                         </select>
                       </div>
@@ -971,7 +978,11 @@ const RegisterCv = () => {
                           name={`anioFinEducacion${index}`}
                           value={field.anioFinEducacion}
                           onChange={(e) =>
-                            handleInputChangeEducacion(e, index, "anioFinEducacion")
+                            handleInputChangeEducacion(
+                              e,
+                              index,
+                              "anioFinEducacion"
+                            )
                           }
                         >
                           <option value="">Seleccione el año</option>
@@ -982,9 +993,11 @@ const RegisterCv = () => {
                           ))}
                         </select>
                       </div>
-    
+
                       <div className="col-lg-12 mb-3">
-                        <label htmlFor={`carrera${index}`}>Carrera Cursada:</label>
+                        <label htmlFor={`carrera${index}`}>
+                          Carrera Cursada:
+                        </label>
                         <input
                           key={`carrera-${activeStep}`} // Usar activeStep en la key
                           type="text"
@@ -1019,716 +1032,749 @@ const RegisterCv = () => {
               >
                 Agregar más campos de Educación
               </button>
-          </div>
-        )}
-        {activeStep === 1 && (
-          <div className="container mt-5">
-          <h2 style={styles.experienciasColor}>Experiencias Laborales</h2>
-          <div id="experiencia-container">
-            {experienciaFields.map((field, index) => (
-              <div className="experiencia-item" key={index}>
-                <hr />
-                <div className="row mt-3">
-                  <div className="col-lg-4 mb-3">
-                    <label htmlFor={`empresa${index}`}>
-                      Nombre de empresa:
-                    </label>
-                    <input
-                      key={`empresa-${activeStep}`} // Usar activeStep en la key
-                      type="text"
-                      className="form-control"
-                      name={`empresaName${index}`}
-                      value={field.empresaName}
-                      onChange={(e) =>
-                        handleInputChangeExperiencia(e, index, "empresaName")
-                      }
-                      placeholder="Ingrese el nombre de la empresa"
-                    />
-                  </div>
-                  <div className="col-lg-2 mb-3">
-                    <label htmlFor={`mesInicioExperiencia${index}`}>
-                      Mes de inicio:
-                    </label>
-                    <select
-                      className="form-control"
-                      name={`mesInicioExperiencia${index}`}
-                      value={field.mesInicioExperiencia}
-                      onChange={(e) =>
-                        handleInputChangeExperiencia(
-                          e,
-                          index,
-                          "mesInicioExperiencia"
-                        )
-                      }
-                    >
-                      <option value="">Mes de Inicio</option>
-                      <option value="Ene">Enero</option>
-                      <option value="Feb">Febrero</option>
-                      <option value="Mar">Marzo</option>
-                      <option value="Abr">Abril</option>
-                      <option value="May">Mayo</option>
-                      <option value="Jun">Junio</option>
-                      <option value="Jul">Julio</option>
-                      <option value="Ago">Agosto</option>
-                      <option value="Sep">Septiembre</option>
-                      <option value="Oct">Octubre</option>
-                      <option value="Nov">Noviembre</option>
-                      <option value="Dic">Diciembre</option>
-                    </select>
-                  </div>
-                  <div className="col-lg-2 mb-3">
-                    <label htmlFor={`anioInicioExperiencia${index}`}>
-                      Año de inicio:
-                    </label>
-                    <select
-                      className="form-control"
-                      id={`anioInicioExperiencia${index}`}
-                      name={`anioInicioExperiencia${index}`}
-                      value={field.anioInicioExperiencia}
-                      onChange={(e) =>
-                        handleInputChangeExperiencia(
-                          e,
-                          index,
-                          "anioInicioExperiencia"
-                        )
-                      }
-                    >
-                      {" "}
-                      <option value="">Año de inicio</option>
-                      {generateYearsRange().map((year) => (
-                        <option key={year} value={year}>
-                          {year}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="col-lg-2 mb-3">
-                    <label htmlFor={`mesFinExperiencia${index}`}>
-                      Mes de finalización:
-                    </label>
-                    <select
-                      className="form-control"
-                      name={`mesFinExperiencia${index}`}
-                      value={field.mesFinExperiencia}
-                      onChange={(e) =>
-                        handleInputChangeExperiencia(
-                          e,
-                          index,
-                          "mesFinExperiencia"
-                        )
-                      }
-                    >
-                      <option value="">Mes Fin</option>
-                      <option value="Ene">Enero</option>
-                      <option value="Feb">Febrero</option>
-                      <option value="Mar">Marzo</option>
-                      <option value="Abr">Abril</option>
-                      <option value="May">Mayo</option>
-                      <option value="Jun">Junio</option>
-                      <option value="Jul">Julio</option>
-                      <option value="Ago">Agosto</option>
-                      <option value="Sep">Septiembre</option>
-                      <option value="Oct">Octubre</option>
-                      <option value="Nov">Noviembre</option>
-                      <option value="Dic">Diciembre</option>
-                    </select>
-                  </div>
-                  <div className="col-lg-2 mb-3">
-                    <label htmlFor={`anioFinExperiencia${index}`}>
-                      Año de finalización:
-                    </label>
-                    <select
-                      className="form-control"
-                      id={`anioFinExperiencia${index}`}
-                      name={`anioFinExperiencia${index}`}
-                      value={field.anioFinExperiencia}
-                      onChange={(e) =>
-                        handleInputChangeExperiencia(
-                          e,
-                          index,
-                          "anioFinExperiencia"
-                        )
-                      }
-                    >
-                      {" "}
-                      <option value="">Año de inicio</option>
-                      {generateYearsRange().map((year) => (
-                        <option key={year} value={year}>
-                          {year}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
+            </div>
+          )}
+          {activeStep === 1 && (
+            <div className="container mt-5">
+              <h2 style={styles.experienciasColor}>Experiencias Laborales</h2>
+              <div id="experiencia-container">
+                {experienciaFields.map((field, index) => (
+                  <div className="experiencia-item" key={index}>
+                    <hr />
+                    <div className="row mt-3">
+                      <div className="col-lg-4 mb-3">
+                        <label htmlFor={`empresa${index}`}>
+                          Nombre de empresa:
+                        </label>
+                        <input
+                          key={`empresa-${activeStep}`} // Usar activeStep en la key
+                          type="text"
+                          className="form-control"
+                          name={`empresaName${index}`}
+                          value={field.empresaName}
+                          onChange={(e) =>
+                            handleInputChangeExperiencia(
+                              e,
+                              index,
+                              "empresaName"
+                            )
+                          }
+                          placeholder="Ingrese el nombre de la empresa"
+                        />
+                      </div>
+                      <div className="col-lg-2 mb-3">
+                        <label htmlFor={`mesInicioExperiencia${index}`}>
+                          Mes de inicio:
+                        </label>
+                        <select
+                          className="form-control"
+                          name={`mesInicioExperiencia${index}`}
+                          value={field.mesInicioExperiencia}
+                          onChange={(e) =>
+                            handleInputChangeExperiencia(
+                              e,
+                              index,
+                              "mesInicioExperiencia"
+                            )
+                          }
+                        >
+                          <option value="">Mes de Inicio</option>
+                          <option value="Ene">Enero</option>
+                          <option value="Feb">Febrero</option>
+                          <option value="Mar">Marzo</option>
+                          <option value="Abr">Abril</option>
+                          <option value="May">Mayo</option>
+                          <option value="Jun">Junio</option>
+                          <option value="Jul">Julio</option>
+                          <option value="Ago">Agosto</option>
+                          <option value="Sep">Septiembre</option>
+                          <option value="Oct">Octubre</option>
+                          <option value="Nov">Noviembre</option>
+                          <option value="Dic">Diciembre</option>
+                        </select>
+                      </div>
+                      <div className="col-lg-2 mb-3">
+                        <label htmlFor={`anioInicioExperiencia${index}`}>
+                          Año de inicio:
+                        </label>
+                        <select
+                          className="form-control"
+                          id={`anioInicioExperiencia${index}`}
+                          name={`anioInicioExperiencia${index}`}
+                          value={field.anioInicioExperiencia}
+                          onChange={(e) =>
+                            handleInputChangeExperiencia(
+                              e,
+                              index,
+                              "anioInicioExperiencia"
+                            )
+                          }
+                        >
+                          {" "}
+                          <option value="">Año de inicio</option>
+                          {generateYearsRange().map((year) => (
+                            <option key={year} value={year}>
+                              {year}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="col-lg-2 mb-3">
+                        <label htmlFor={`mesFinExperiencia${index}`}>
+                          Mes de finalización:
+                        </label>
+                        <select
+                          className="form-control"
+                          name={`mesFinExperiencia${index}`}
+                          value={field.mesFinExperiencia}
+                          onChange={(e) =>
+                            handleInputChangeExperiencia(
+                              e,
+                              index,
+                              "mesFinExperiencia"
+                            )
+                          }
+                        >
+                          <option value="">Mes Fin</option>
+                          <option value="Ene">Enero</option>
+                          <option value="Feb">Febrero</option>
+                          <option value="Mar">Marzo</option>
+                          <option value="Abr">Abril</option>
+                          <option value="May">Mayo</option>
+                          <option value="Jun">Junio</option>
+                          <option value="Jul">Julio</option>
+                          <option value="Ago">Agosto</option>
+                          <option value="Sep">Septiembre</option>
+                          <option value="Oct">Octubre</option>
+                          <option value="Nov">Noviembre</option>
+                          <option value="Dic">Diciembre</option>
+                        </select>
+                      </div>
+                      <div className="col-lg-2 mb-3">
+                        <label htmlFor={`anioFinExperiencia${index}`}>
+                          Año de finalización:
+                        </label>
+                        <select
+                          className="form-control"
+                          id={`anioFinExperiencia${index}`}
+                          name={`anioFinExperiencia${index}`}
+                          value={field.anioFinExperiencia}
+                          onChange={(e) =>
+                            handleInputChangeExperiencia(
+                              e,
+                              index,
+                              "anioFinExperiencia"
+                            )
+                          }
+                        >
+                          {" "}
+                          <option value="">Año de inicio</option>
+                          {generateYearsRange().map((year) => (
+                            <option key={year} value={year}>
+                              {year}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
 
-                <div className="row">
-                  <div className="col-lg-12 mb-3">
-                    <label htmlFor={`cargo${index}`}>Cargo desempeñado:</label>
-                    <input
-                      key={`cargo-${activeStep}`} // Usar activeStep en la key
-                      type="text"
-                      className="form-control"
-                      name={`cargo${index}`}
-                      value={field.cargo}
-                      onChange={(e) =>
-                        handleInputChangeExperiencia(e, index, "cargo")
-                      }
-                      placeholder="Ingrese el cargo que desempeñó"
-                    ></input>
-                  </div>
-                </div>
+                    <div className="row">
+                      <div className="col-lg-12 mb-3">
+                        <label htmlFor={`cargo${index}`}>
+                          Cargo desempeñado:
+                        </label>
+                        <input
+                          key={`cargo-${activeStep}`} // Usar activeStep en la key
+                          type="text"
+                          className="form-control"
+                          name={`cargo${index}`}
+                          value={field.cargo}
+                          onChange={(e) =>
+                            handleInputChangeExperiencia(e, index, "cargo")
+                          }
+                          placeholder="Ingrese el cargo que desempeñó"
+                        ></input>
+                      </div>
+                    </div>
 
-                <div className="row">
-                  <div className="col-lg-12 mb-3">
-                    <label htmlFor={`actividades${index}`}>
-                      Actividades realizadas en la empresa:
-                    </label>
-                    <textarea
-                      className="form-control"
-                      name={`actividades${index}`}
-                      rows="3"
-                      value={field.actividades}
-                      onChange={(e) =>
-                        handleInputChangeExperiencia(e, index, "actividades")
-                      }
-                      placeholder="Ingrese las actividades realizadas"
-                    ></textarea>
-                  </div>
-                </div>
+                    <div className="row">
+                      <div className="col-lg-12 mb-3">
+                        <label htmlFor={`actividades${index}`}>
+                          Actividades realizadas en la empresa:
+                        </label>
+                        <textarea
+                          className="form-control"
+                          name={`actividades${index}`}
+                          rows="3"
+                          value={field.actividades}
+                          onChange={(e) =>
+                            handleInputChangeExperiencia(
+                              e,
+                              index,
+                              "actividades"
+                            )
+                          }
+                          placeholder="Ingrese las actividades realizadas"
+                        ></textarea>
+                      </div>
+                    </div>
 
-                <div className="row">
-                  <div className="col-lg-12 mb-3">
-                    <label htmlFor={`tecnologias${index}`}>
-                      Tecnologias utilizadas:
-                    </label>
-                    <input
-                      key={`tecnologias-${activeStep}`} // Usar activeStep en la key
-                      type="text"
-                      className="form-control"
-                      name={`tecnologias${index}`}
-                      value={field.tecnologias}
-                      onChange={(e) =>
-                        handleInputChangeExperiencia(e, index, "tecnologias")
-                      }
-                      placeholder="Ingrese las tecnologias"
-                    ></input>
+                    <div className="row">
+                      <div className="col-lg-12 mb-3">
+                        <label htmlFor={`tecnologias${index}`}>
+                          Tecnologias utilizadas:
+                        </label>
+                        <input
+                          key={`tecnologias-${activeStep}`} // Usar activeStep en la key
+                          type="text"
+                          className="form-control"
+                          name={`tecnologias${index}`}
+                          value={field.tecnologias}
+                          onChange={(e) =>
+                            handleInputChangeExperiencia(
+                              e,
+                              index,
+                              "tecnologias"
+                            )
+                          }
+                          placeholder="Ingrese las tecnologias"
+                        ></input>
+                      </div>
+                      <div className="col-lg-12 mb-3">
+                        {index > 0 && ( // Muestra el botón de eliminar solo cuando hay más de un elemento
+                          <button
+                            type="button"
+                            className="btn btn-danger"
+                            onClick={() => handleEliminarExperiencia(field.id)}
+                          >
+                            Eliminar
+                          </button>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div className="col-lg-12 mb-3">
-                    {index > 0 && ( // Muestra el botón de eliminar solo cuando hay más de un elemento
-                      <button
-                        type="button"
-                        className="btn btn-danger"
-                        onClick={() => handleEliminarExperiencia(field.id)}
-                      >
-                        Eliminar
-                      </button>
-                    )}
-                  </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
 
-          <button
-            type="button"
-            className="btn btn-primary"
-            style={styles.buttonExperiencia}
-            onClick={handleAgregarExperiencia}
-          >
-            Agregar más campos de Experiencia Laboral
-          </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                style={styles.buttonExperiencia}
+                onClick={handleAgregarExperiencia}
+              >
+                Agregar más campos de Experiencia Laboral
+              </button>
 
-          <hr />
-          <br />
-          <h2 style={styles.certificacionColor}>Certificaciones</h2>
-          <div id="certificacion-container">
-            {certificacionFields.map((field, index) => (
-              <div className="certificacion-item" key={index}>
-                <hr />
-                <div className="row mt-3">
-                  <div className="col-lg-6 mb-3">
-                    <label htmlFor={`certificacionName${index}`}>
-                      Nombre de Certificación:
-                    </label>
-                    <input
-                      key={`certificacionName-${activeStep}`} // Usar activeStep en la key
-                      type="text"
-                      className="form-control"
-                      name={`certificacionName${index}`}
-                      placeholder="Ingrese el nombre de la certificación"
-                      value={field.certificacionName}
-                      onChange={(e) =>
-                        handleInputChangeCertificacion(
-                          e,
-                          index,
-                          "certificacionName"
-                        )
-                      }
-                    ></input>
-                  </div>
-                  <div className="col-lg-3 mb-3">
-                    <label htmlFor={`mesFinCertificacion${index}`}>
-                      Mes de finalización:
-                    </label>
-                    <select
-                      className="form-control"
-                      name={`mesFinCertificacion${index}`}
-                      value={field.mesFinCertificacion}
-                      onChange={(e) =>
-                        handleInputChangeCertificacion(
-                          e,
-                          index,
-                          "mesFinCertificacion"
-                        )
-                      }
-                    >
-                      <option value="">Seleccione el mes</option>
-                      <option value="Ene">Enero</option>
-                      <option value="Feb">Febrero</option>
-                      <option value="Mar">Marzo</option>
-                      <option value="Abr">Abril</option>
-                      <option value="May">Mayo</option>
-                      <option value="Jun">Junio</option>
-                      <option value="Jul">Julio</option>
-                      <option value="Ago">Agosto</option>
-                      <option value="Sep">Septiembre</option>
-                      <option value="Oct">Octubre</option>
-                      <option value="Nov">Noviembre</option>
-                      <option value="Dic">Diciembre</option>
-                    </select>
-                  </div>
+              <hr />
+              <br />
+              <h2 style={styles.certificacionColor}>Certificaciones</h2>
+              <div id="certificacion-container">
+                {certificacionFields.map((field, index) => (
+                  <div className="certificacion-item" key={index}>
+                    <hr />
+                    <div className="row mt-3">
+                      <div className="col-lg-6 mb-3">
+                        <label htmlFor={`certificacionName${index}`}>
+                          Nombre de Certificación:
+                        </label>
+                        <input
+                          key={`certificacionName-${activeStep}`} // Usar activeStep en la key
+                          type="text"
+                          className="form-control"
+                          name={`certificacionName${index}`}
+                          placeholder="Ingrese el nombre de la certificación"
+                          value={field.certificacionName}
+                          onChange={(e) =>
+                            handleInputChangeCertificacion(
+                              e,
+                              index,
+                              "certificacionName"
+                            )
+                          }
+                        ></input>
+                      </div>
+                      <div className="col-lg-3 mb-3">
+                        <label htmlFor={`mesFinCertificacion${index}`}>
+                          Mes de finalización:
+                        </label>
+                        <select
+                          className="form-control"
+                          name={`mesFinCertificacion${index}`}
+                          value={field.mesFinCertificacion}
+                          onChange={(e) =>
+                            handleInputChangeCertificacion(
+                              e,
+                              index,
+                              "mesFinCertificacion"
+                            )
+                          }
+                        >
+                          <option value="">Seleccione el mes</option>
+                          <option value="Ene">Enero</option>
+                          <option value="Feb">Febrero</option>
+                          <option value="Mar">Marzo</option>
+                          <option value="Abr">Abril</option>
+                          <option value="May">Mayo</option>
+                          <option value="Jun">Junio</option>
+                          <option value="Jul">Julio</option>
+                          <option value="Ago">Agosto</option>
+                          <option value="Sep">Septiembre</option>
+                          <option value="Oct">Octubre</option>
+                          <option value="Nov">Noviembre</option>
+                          <option value="Dic">Diciembre</option>
+                        </select>
+                      </div>
 
-                  <div className="col-lg-3 mb-3">
-                    <label htmlFor={`anioFinCertificacion${index}`}>
-                      Año de finalización:
-                    </label>
-                    <select
-                      type="num"
-                      className="form-control"
-                      name={`anioFinCertificacion${index}`}
-                      placeholder="Año de Finalización"
-                      value={field.anioFinCertificacion}
-                      onChange={(e) =>
-                        handleInputChangeCertificacion(
-                          e,
-                          index,
-                          "anioFinCertificacion"
-                        )
-                      }
-                    >
-                      {" "}
-                      {generateYearsRange().map((year) => (
-                        <option key={year} value={year}>
-                          {year}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-lg-12 mb-3">
-                    <label htmlFor={`institucionCertificacion${index}`}>
-                      Institución que entregó la certificación:
-                    </label>
-                    <input
-                      key={`institucionCertificacion-${activeStep}`} // Usar activeStep en la key
-                      type="text"
-                      className="form-control"
-                      name={`institucionCertificacion${index}`}
-                      placeholder="Ingrese el nombre de la institución"
-                      value={field.institucionCertificacion}
-                      onChange={(e) =>
-                        handleInputChangeCertificacion(
-                          e,
-                          index,
-                          "institucionCertificacion"
-                        )
-                      }
-                    />
-                  </div>
-                  <div className="col-lg-12 mb-3">
-                    {index > 0 && ( // Muestra el botón de eliminar solo cuando hay más de un elemento
-                      <button
-                        type="button"
-                        className="btn btn-danger"
-                        onClick={() => handleEliminarCertificacion(field.id)}
-                      >
-                        Eliminar
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <button
-            style={styles.buttonCertificacion}
-            type="button"
-            className="btn btn-primary"
-            onClick={handleAgregarCertificacion}
-          >
-            Agregar más campos de Certificación
-          </button>
-        </div>
-        )}
-        {activeStep === 2 && (
-          <div className="container mt-5">
-          <h2 style={styles.habilidadesColor}>Habilidades</h2>
-          <div id="habilidades-container">
-            <div className="habilidades-item">
-              <div className="row">
-                <div className="col-lg-6 mb-3">
-                  <label htmlFor="sistemasOperativos">
-                    Sistemas Operativos
-                  </label>
-                  <div className="dropdown">
-                    <input
-                      key={`sistemasOperativos-${activeStep}`} // Usar activeStep en la key
-                      type="text"
-                      className="form-control"
-                      id="sistemasOperativos"
-                      name="sistemasOperativos"
-                      placeholder="Seleccione los sistemas operativos que domina"
-                      onClick={() => toggleDropdown("sistemasOperativos")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
-                      value={selectedSistemasOperativos.join(", ")} // Mostrar los elementos separados por comas
-                      readOnly
-                      onChange={(e) =>
-                        setSelectedSistemasOperativos(e.target.value)
-                      }
-                    />{" "}
-                    {isOpenSistemasOperativos && (
-                      <ul
-                        style={styles.ul}
-                        className="sistemasOperativos-list"
-                        ref={dropdownRef}
-                      >
-                        {sistemasOperativos.map((option, index) => (
-                          <li
-                            style={styles.li}
-                            key={index}
-                            className={
-                              selectedSistemasOperativos.includes(option)
-                                ? "selected"
-                                : " "
-                            }
+                      <div className="col-lg-3 mb-3">
+                        <label htmlFor={`anioFinCertificacion${index}`}>
+                          Año de finalización:
+                        </label>
+                        <select
+                          type="num"
+                          className="form-control"
+                          name={`anioFinCertificacion${index}`}
+                          placeholder="Año de Finalización"
+                          value={field.anioFinCertificacion}
+                          onChange={(e) =>
+                            handleInputChangeCertificacion(
+                              e,
+                              index,
+                              "anioFinCertificacion"
+                            )
+                          }
+                        >
+                          {" "}
+                          {generateYearsRange().map((year) => (
+                            <option key={year} value={year}>
+                              {year}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-lg-12 mb-3">
+                        <label htmlFor={`institucionCertificacion${index}`}>
+                          Institución que entregó la certificación:
+                        </label>
+                        <input
+                          key={`institucionCertificacion-${activeStep}`} // Usar activeStep en la key
+                          type="text"
+                          className="form-control"
+                          name={`institucionCertificacion${index}`}
+                          placeholder="Ingrese el nombre de la institución"
+                          value={field.institucionCertificacion}
+                          onChange={(e) =>
+                            handleInputChangeCertificacion(
+                              e,
+                              index,
+                              "institucionCertificacion"
+                            )
+                          }
+                        />
+                      </div>
+                      <div className="col-lg-12 mb-3">
+                        {index > 0 && ( // Muestra el botón de eliminar solo cuando hay más de un elemento
+                          <button
+                            type="button"
+                            className="btn btn-danger"
                             onClick={() =>
-                              handleSelect(option, "sistemasOperativos")
+                              handleEliminarCertificacion(field.id)
                             }
                           >
-                            {option}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+                            Eliminar
+                          </button>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="col-lg-6 mb-3">
-                  <label htmlFor="lenguajesProgramacion">
-                    Lenguajes de programación
-                  </label>
-                  <div className="dropdown">
-                    <input
-                      key={`lenguajesProgramacion-${activeStep}`} // Usar activeStep en la key
-                      type="text"
-                      className="form-control"
-                      id="lenguajesProgramacion"
-                      name="lenguajesProgramacion"
-                      placeholder="Seleccione los lenguajes de programación que domina"
-                      onClick={() => toggleDropdown("lenguajesProgramacion")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
-                      value={selectedLenguajesProgramacion.join(", ")} // Mostrar los elementos separados por comas
-                      onChange={(e) =>
-                        setSelectedLenguajesProgramacion(e.target.value)
-                      }
-                      readOnly
-                    />{" "}
-                    {isOpenLenguajesProgramacion && (
-                      <ul
-                        style={styles.ul}
-                        className="country-list"
-                        ref={dropdownRef}
-                      >
-                        {lenguajesProgramacion.map((option, index) => (
-                          <li
-                            style={styles.li}
-                            key={index}
-                            className={
-                              selectedLenguajesProgramacion.includes(option)
-                                ? "selected"
-                                : " "
-                            }
-                            onClick={() =>
-                              handleSelect(option, "lenguajesProgramacion")
-                            }
-                          >
-                            {option}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                </div>
+                ))}
               </div>
-
-              <div className="row">
-                <div className="col-lg-6 mb-3">
-                  <label htmlFor="herramientasProgramacion">
-                    Herramientas de programación
-                  </label>
-                  <div className="dropdown">
-                    <input
-                      key={`herramientasProgramacion-${activeStep}`} // Usar activeStep en la key
-                      type="text"
-                      className="form-control"
-                      id="tools"
-                      name="tools"
-                      placeholder="Seleccione las herramientas de programación que domina"
-                      onClick={() => toggleDropdown("tools")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
-                      value={selectedTools.join(", ")} // Mostrar los elementos separados por comas
-                      onChange={(e) => setSelectetTools(e.target.value)}
-                      readOnly
-                    />
-                    {isOpenTools && (
-                      <ul
-                        style={styles.ul}
-                        className="tools-list"
-                        ref={dropdownRef}
-                      >
-                        {tools.map((option, index) => (
-                          <li
-                            style={styles.li}
-                            key={index}
-                            className={
-                              selectedTools.includes(option) ? "selected" : " "
-                            }
-                            onClick={() => handleSelect(option, "tools")}
+              <button
+                style={styles.buttonCertificacion}
+                type="button"
+                className="btn btn-primary"
+                onClick={handleAgregarCertificacion}
+              >
+                Agregar más campos de Certificación
+              </button>
+            </div>
+          )}
+          {activeStep === 2 && (
+            <div className="container mt-5">
+              <h2 style={styles.habilidadesColor}>Habilidades</h2>
+              <div id="habilidades-container">
+                <div className="habilidades-item">
+                  <div className="row">
+                    <div className="col-lg-6 mb-3">
+                      <label htmlFor="sistemasOperativos">
+                        Sistemas Operativos
+                      </label>
+                      <div className="dropdown">
+                        <input
+                          key={`sistemasOperativos-${activeStep}`} // Usar activeStep en la key
+                          type="text"
+                          className="form-control"
+                          id="sistemasOperativos"
+                          name="sistemasOperativos"
+                          placeholder="Seleccione los sistemas operativos que domina"
+                          onClick={() => toggleDropdown("sistemasOperativos")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
+                          value={selectedSistemasOperativos.join(", ")} // Mostrar los elementos separados por comas
+                          readOnly
+                          onChange={(e) =>
+                            setSelectedSistemasOperativos(e.target.value)
+                          }
+                        />{" "}
+                        {isOpenSistemasOperativos && (
+                          <ul
+                            style={styles.ul}
+                            className="sistemasOperativos-list"
+                            ref={dropdownRef}
                           >
-                            {option}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+                            {sistemasOperativos.map((option, index) => (
+                              <li
+                                style={styles.li}
+                                key={index}
+                                className={
+                                  selectedSistemasOperativos.includes(option)
+                                    ? "selected"
+                                    : " "
+                                }
+                                onClick={() =>
+                                  handleSelect(option, "sistemasOperativos")
+                                }
+                              >
+                                {option}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-lg-6 mb-3">
+                      <label htmlFor="lenguajesProgramacion">
+                        Lenguajes de programación
+                      </label>
+                      <div className="dropdown">
+                        <input
+                          key={`lenguajesProgramacion-${activeStep}`} // Usar activeStep en la key
+                          type="text"
+                          className="form-control"
+                          id="lenguajesProgramacion"
+                          name="lenguajesProgramacion"
+                          placeholder="Seleccione los lenguajes de programación que domina"
+                          onClick={() =>
+                            toggleDropdown("lenguajesProgramacion")
+                          } // Mostrar/ocultar la lista al hacer clic en el campo de texto
+                          value={selectedLenguajesProgramacion.join(", ")} // Mostrar los elementos separados por comas
+                          onChange={(e) =>
+                            setSelectedLenguajesProgramacion(e.target.value)
+                          }
+                          readOnly
+                        />{" "}
+                        {isOpenLenguajesProgramacion && (
+                          <ul
+                            style={styles.ul}
+                            className="country-list"
+                            ref={dropdownRef}
+                          >
+                            {lenguajesProgramacion.map((option, index) => (
+                              <li
+                                style={styles.li}
+                                key={index}
+                                className={
+                                  selectedLenguajesProgramacion.includes(option)
+                                    ? "selected"
+                                    : " "
+                                }
+                                onClick={() =>
+                                  handleSelect(option, "lenguajesProgramacion")
+                                }
+                              >
+                                {option}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-lg-6 mb-3">
+                      <label htmlFor="herramientasProgramacion">
+                        Herramientas de programación
+                      </label>
+                      <div className="dropdown">
+                        <input
+                          key={`herramientasProgramacion-${activeStep}`} // Usar activeStep en la key
+                          type="text"
+                          className="form-control"
+                          id="tools"
+                          name="tools"
+                          placeholder="Seleccione las herramientas de programación que domina"
+                          onClick={() => toggleDropdown("tools")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
+                          value={selectedTools.join(", ")} // Mostrar los elementos separados por comas
+                          onChange={(e) => setSelectetTools(e.target.value)}
+                          readOnly
+                        />
+                        {isOpenTools && (
+                          <ul
+                            style={styles.ul}
+                            className="tools-list"
+                            ref={dropdownRef}
+                          >
+                            {tools.map((option, index) => (
+                              <li
+                                style={styles.li}
+                                key={index}
+                                className={
+                                  selectedTools.includes(option)
+                                    ? "selected"
+                                    : " "
+                                }
+                                onClick={() => handleSelect(option, "tools")}
+                              >
+                                {option}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-lg-6 mb-3">
+                      <label htmlFor="librerias">Librerías</label>
+                      <div className="dropdown">
+                        <input
+                          key={`librerias-${activeStep}`} // Usar activeStep en la key
+                          type="text"
+                          className="form-control"
+                          id="librerias"
+                          name="librerias"
+                          placeholder="Seleccione las librerias que domina"
+                          onClick={() => toggleDropdown("librerias")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
+                          value={selectedLibrerias.join(", ")} // Mostrar los elementos separados por comas
+                          onChange={(e) => setSelectedLibrerias(e.target.value)}
+                          readOnly
+                        />
+                        {isOpenLibrerias && (
+                          <ul
+                            style={styles.ul}
+                            className="librerias-list"
+                            ref={dropdownRef}
+                          >
+                            {librerias.map((option, index) => (
+                              <li
+                                style={styles.li}
+                                key={index}
+                                className={
+                                  selectedLibrerias.includes(option)
+                                    ? "selected"
+                                    : " "
+                                }
+                                onClick={() =>
+                                  handleSelect(option, "librerias")
+                                }
+                              >
+                                {option}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-lg-6 mb-3">
+                      <label htmlFor="dataBases">Bases de Datos</label>
+                      <div className="dropdown">
+                        <input
+                          key={`dataBases-${activeStep}`} // Usar activeStep en la key
+                          type="text"
+                          className="form-control"
+                          id="dataBases"
+                          name="dataBases"
+                          placeholder="Seleccione las bases de datos que domina"
+                          onClick={() => toggleDropdown("dataBases")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
+                          value={selectedDataBases.join(", ")} // Mostrar los elementos separados por comas
+                          onChange={(e) => setSelectedDataBases(e.target.value)}
+                          readOnly
+                        />
+                        {isOpenDataBases && (
+                          <ul
+                            style={styles.ul}
+                            className="dataBases-list"
+                            ref={dropdownRef}
+                          >
+                            {dataBases.map((option, index) => (
+                              <li
+                                style={styles.li}
+                                key={index}
+                                className={
+                                  selectedDataBases.includes(option)
+                                    ? "selected"
+                                    : " "
+                                }
+                                onClick={() =>
+                                  handleSelect(option, "dataBases")
+                                }
+                              >
+                                {option}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6 mb-3">
+                      <label htmlFor="cloud">Cloud</label>
+                      <div className="dropdown">
+                        <input
+                          key={`cloud-${activeStep}`} // Usar activeStep en la key
+                          type="text"
+                          className="form-control"
+                          id="cloud"
+                          name="cloud"
+                          placeholder="Seleccione las nubes que domina"
+                          onClick={() => toggleDropdown("cloud")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
+                          value={selectedCloud.join(", ")} // Mostrar los elementos separados por comas
+                          onChange={(e) => setSelectedCloud(e.target.value)}
+                          readOnly
+                        />
+                        {isOpenCloud && (
+                          <ul
+                            style={styles.ul}
+                            className="cloud-list"
+                            ref={dropdownRef}
+                          >
+                            {cloud.map((option, index) => (
+                              <li
+                                style={styles.li}
+                                key={index}
+                                className={
+                                  selectedCloud.includes(option)
+                                    ? "selected"
+                                    : " "
+                                }
+                                onClick={() => handleSelect(option, "cloud")}
+                              >
+                                {option}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="col-lg-6 mb-3">
-                  <label htmlFor="librerias">Librerías</label>
-                  <div className="dropdown">
-                    <input
-                      key={`librerias-${activeStep}`} // Usar activeStep en la key
-                      type="text"
-                      className="form-control"
-                      id="librerias"
-                      name="librerias"
-                      placeholder="Seleccione las librerias que domina"
-                      onClick={() => toggleDropdown("librerias")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
-                      value={selectedLibrerias.join(", ")} // Mostrar los elementos separados por comas
-                      onChange={(e) => setSelectedLibrerias(e.target.value)}
-                      readOnly
-                    />
-                    {isOpenLibrerias && (
-                      <ul
-                        style={styles.ul}
-                        className="librerias-list"
-                        ref={dropdownRef}
-                      >
-                        {librerias.map((option, index) => (
-                          <li
-                            style={styles.li}
-                            key={index}
-                            className={
-                              selectedLibrerias.includes(option)
-                                ? "selected"
-                                : " "
-                            }
-                            onClick={() => handleSelect(option, "librerias")}
-                          >
-                            {option}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-lg-6 mb-3">
-                  <label htmlFor="dataBases">Bases de Datos</label>
-                  <div className="dropdown">
-                    <input
-                      key={`dataBases-${activeStep}`} // Usar activeStep en la key
-                      type="text"
-                      className="form-control"
-                      id="dataBases"
-                      name="dataBases"
-                      placeholder="Seleccione las bases de datos que domina"
-                      onClick={() => toggleDropdown("dataBases")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
-                      value={selectedDataBases.join(", ")} // Mostrar los elementos separados por comas
-                      onChange={(e) => setSelectedDataBases(e.target.value)}
-                      readOnly
-                    />
-                    {isOpenDataBases && (
-                      <ul
-                        style={styles.ul}
-                        className="dataBases-list"
-                        ref={dropdownRef}
-                      >
-                        {dataBases.map((option, index) => (
-                          <li
-                            style={styles.li}
-                            key={index}
-                            className={
-                              selectedDataBases.includes(option)
-                                ? "selected"
-                                : " "
-                            }
-                            onClick={() => handleSelect(option, "dataBases")}
-                          >
-                            {option}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                </div>
-
-                <div className="col-lg-6 mb-3">
-                  <label htmlFor="cloud">Cloud</label>
-                  <div className="dropdown">
-                    <input
-                      key={`cloud-${activeStep}`} // Usar activeStep en la key
-                      type="text"
-                      className="form-control"
-                      id="cloud"
-                      name="cloud"
-                      placeholder="Seleccione las nubes que domina"
-                      onClick={() => toggleDropdown("cloud")} // Mostrar/ocultar la lista al hacer clic en el campo de texto
-                      value={selectedCloud.join(", ")} // Mostrar los elementos separados por comas
-                      onChange={(e) => setSelectedCloud(e.target.value)}
-                      readOnly
-                    />
-                    {isOpenCloud && (
-                      <ul
-                        style={styles.ul}
-                        className="cloud-list"
-                        ref={dropdownRef}
-                      >
-                        {cloud.map((option, index) => (
-                          <li
-                            style={styles.li}
-                            key={index}
-                            className={
-                              selectedCloud.includes(option) ? "selected" : " "
-                            }
-                            onClick={() => handleSelect(option, "cloud")}
-                          >
-                            {option}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+                <br />
+                <h2>Idiomas</h2>
+                <div id="idioma-container">
+                  <div className="idioma-item">
+                    <div className="row">
+                      <div className="col-lg-3 mb-3">
+                        <label htmlFor="espanol" className="form-label">
+                          Español
+                        </label>
+                        <div className="dropdown">
+                          <input
+                            key={`espanol-${activeStep}`} // Usar activeStep en la key
+                            type="text"
+                            className="form-control"
+                            id="espanol"
+                            name="espanol"
+                            placeholder="Nivel de español"
+                            onClick={() => toggleDropdown("espanol")}
+                            value={selectedEspanol}
+                            onChange={(e) => setSelectedEspanol(e.target.value)}
+                            readOnly
+                          />
+                          {isOpenEspanol && (
+                            <ul
+                              style={styles.ul}
+                              className="espanol-list"
+                              ref={dropdownRef}
+                            >
+                              {niveles.map((option, index) => (
+                                <li
+                                  style={styles.li}
+                                  key={index}
+                                  className="list-item"
+                                  onClick={() =>
+                                    handleSelect(option, "espanol")
+                                  }
+                                >
+                                  {option}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      </div>
+                      <div className="col-lg-3 mb-3">
+                        <label htmlFor="ingles" className="form-label">
+                          Ingles
+                        </label>
+                        <div className="dropdown">
+                          <input
+                            key={`ingles-${activeStep}`} // Usar activeStep en la key
+                            type="text"
+                            className="form-control"
+                            id="ingles"
+                            name="ingles"
+                            placeholder="Nivel de ingles"
+                            onClick={() => toggleDropdown("ingles")}
+                            value={selectedIngles}
+                            onChange={(e) => setSelectedIngles(e.target.value)}
+                            readOnly
+                          />
+                          {isOpenIngles && (
+                            <ul
+                              style={styles.ul}
+                              className="ingles-list"
+                              ref={dropdownRef}
+                            >
+                              {niveles.map((option, index) => (
+                                <li
+                                  style={styles.li}
+                                  key={index}
+                                  className="list-item"
+                                  onClick={() => handleSelect(option, "ingles")}
+                                >
+                                  {option}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <br />
-            <h2>Idiomas</h2>
-            <div id="idioma-container">
-              <div className="idioma-item">
-                <div className="row">
-                  <div className="col-lg-3 mb-3">
-                    <label htmlFor="espanol" className="form-label">
-                      Español
-                    </label>
-                    <div className="dropdown">
-                      <input
-                        key={`espanol-${activeStep}`} // Usar activeStep en la key
-                        type="text"
-                        className="form-control"
-                        id="espanol"
-                        name="espanol"
-                        placeholder="Nivel de español"
-                        onClick={() => toggleDropdown("espanol")}
-                        value={selectedEspanol}
-                        onChange={(e) => setSelectedEspanol(e.target.value)}
-                        readOnly
-                      />
-                      {isOpenEspanol && (
-                        <ul
-                          style={styles.ul}
-                          className="espanol-list"
-                          ref={dropdownRef}
-                        >
-                          {niveles.map((option, index) => (
-                            <li
-                              style={styles.li}
-                              key={index}
-                              className="list-item"
-                              onClick={() => handleSelect(option, "espanol")}
-                            >
-                              {option}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  </div>
-                  <div className="col-lg-3 mb-3">
-                    <label htmlFor="ingles" className="form-label">
-                      Ingles
-                    </label>
-                    <div className="dropdown">
-                      <input
-                        key={`ingles-${activeStep}`} // Usar activeStep en la key
-                        type="text"
-                        className="form-control"
-                        id="ingles"
-                        name="ingles"
-                        placeholder="Nivel de ingles"
-                        onClick={() => toggleDropdown("ingles")}
-                        value={selectedIngles}
-                        onChange={(e) => setSelectedIngles(e.target.value)}
-                        readOnly
-                      />
-                      {isOpenIngles && (
-                        <ul
-                          style={styles.ul}
-                          className="ingles-list"
-                          ref={dropdownRef}
-                        >
-                          {niveles.map((option, index) => (
-                            <li
-                              style={styles.li}
-                              key={index}
-                              className="list-item"
-                              onClick={() => handleSelect(option, "ingles")}
-                            >
-                              {option}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
-        )}
+          )}
           <hr />
           <div className="d-flex">
             {activeStep !== 0 && (
               <button className="btn btn-link p-2" onClick={handlePrev}>
-                <i className="fas fa-chevron-left"></i> 
+                <i className="fas fa-chevron-left"></i>
               </button>
             )}
-            
+
             {activeStep !== steps.length - 1 ? (
-              <button className="btn btn-primary ml-auto p-2" onClick={handleNext}>
+              <button
+                className="btn btn-primary ml-auto p-2"
+                onClick={handleNext}
+              >
                 Siguiente <i className="fas fa-chevron-right"></i>
               </button>
             ) : (
-              <button className="btn btn-primary ml-auto p-2" /* onClick={handleFinish} */>
+              <button
+                className="btn btn-primary ml-auto p-2" /* onClick={handleFinish} */
+              >
                 Terminar <i className="fas fa-check"></i>
               </button>
             )}
@@ -1737,7 +1783,7 @@ const RegisterCv = () => {
         </div>
       </div>
 
-    <Footer />
+      <Footer />
     </>
   );
 };
