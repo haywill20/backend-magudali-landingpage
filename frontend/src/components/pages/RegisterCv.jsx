@@ -27,7 +27,7 @@ import { Link } from "react-router-dom";
 
 const styles = {
   ul: {
-    display: "block",
+    /*     display: "block",
     position: "absolute",
     zIndex: 2,
     top: "100%",
@@ -37,9 +37,9 @@ const styles = {
     backgroundColor: "#fff",
     maxHeight: "300px",
     overflowY: "auto",
-    padding: 10,
+    padding: 10, */
   },
-  li: {
+  /*   li: {
     cursor: "pointer",
   },
   datosGeneralesColor: {
@@ -68,7 +68,7 @@ const styles = {
   buttonCertificacion: {
     backgroundColor: "#AB7942",
     borderColor: "#AB7942",
-  },
+  }, */
 };
 
 const RegisterCv = () => {

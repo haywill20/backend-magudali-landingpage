@@ -895,7 +895,7 @@ p {
   li
   img {
   width: 100%;
-  height: 240px;
+  height: auto;
 }
 .appie-header-area .appie-header-main-menu ul li .mega-menu-home li a:hover {
   color: #2b70fa;
