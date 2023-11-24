@@ -15,7 +15,7 @@ import ScrollToTop from "./components/helper/ScrollToTop";
 import TermsCustomer from "./components/pages/TermsCustomer";
 import PrivacyPoliciesPage from "./components/pages/PrivacyPoliciesPage";
 import JobsPage from "./components/pages/JobsPage";
-import RegisterCv from "./components/pages/RegisterCv";
+import RegisterCv from "./components/pages/RegisterCv/RegisterCv";
 import TermsSeller from "./components/pages/TermsSeller";
 import TermsDelivery from "./components/pages/TermsDelivery";
 import SupportPage from "./components/pages/SupportPage";
