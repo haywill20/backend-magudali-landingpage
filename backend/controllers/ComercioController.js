@@ -16,7 +16,6 @@ export const getAllComercios = async (req, res) => {
 };
 
 //Procedimiento para mostrar un solo comercio
-
 export const getComercio = async (req, res) => {
   const comercioId = req.params.id;
 

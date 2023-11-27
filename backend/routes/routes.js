@@ -8,6 +8,7 @@ import {
   getAllComercios,
   getComercio,
 } from "../controllers/ComercioController.js";
+import { getAllDepartamentos } from "../controllers/DepartamentoController.js";
 
 const router = express.Router();
 
@@ -30,5 +31,8 @@ router.post("/experienciaslaborales", createExperiencia);
 //rutas para comercios
 router.get("/comercios", getAllComercios);
 router.get("/comercio/:id", getComercio);
+
+//rutas para departamentos
+router.get("/departamentos", getAllDepartamentos);
 
 export default router;
