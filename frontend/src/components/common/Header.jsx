@@ -271,7 +271,7 @@ function Header() {
                         <ul className="mega-menu-home">
                           {comercios.map((comercio) => (
                             <li key={comercio.id}>
-                              <a href="/404">
+                              <a href={comercio.link} target={"_blank"}>
                                 <img
                                   src={`${apiUrl}/images/${comercio.imagen}`}
                                   alt=""
