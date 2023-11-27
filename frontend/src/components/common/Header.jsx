@@ -12,7 +12,7 @@ import axios from "axios";
 ); */
 
 const URIcomercios = `${apiUrl}/comercios/`;
-
+const URIdepartamentos = `${apiUrl}/departamentos/`;
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -34,15 +34,26 @@ function Header() {
   };
 
   const [comercios, setComercios] = useState([]);
+  const [departamentos, setDepartamentos] = useState([]);
 
   useEffect(() => {
     getComercios();
+  }, []);
+
+  useEffect(() => {
+    getDepartamentos();
   }, []);
 
   //Procedimiento para mostrar todos los comercios
   const getComercios = async () => {
     const res = await axios.get(URIcomercios);
     setComercios(res.data);
+  };
+
+  //Procedimiento para mostrar todos los departamentos
+  const getDepartamentos = async () => {
+    const res = await axios.get(URIdepartamentos);
+    setDepartamentos(res.data);
   };
   return (
     <>
@@ -78,29 +89,45 @@ function Header() {
                       <a href="#" onClick={handleMenuClickNegocios}>
                         Negocios
                       </a>
-                      <ul
-                        className={`sub-menu ${menuOpenNegocios ? "open" : ""}`}
-                      >
-                        <li>
-                          <a href="#">
-                            <button className="btn btn-secondary">
-                              <i className="fab fa-apple"></i>
-                              Descargar para iOS
-                            </button>
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="https://play.google.com/store/apps/details?id=com.magudali.seller&pli=1"
-                            target="_blank"
-                          >
-                            <button className="btn btn-success">
-                              <i className="fab fa-google-play"></i>
-                              Descargar para Android
-                            </button>
-                          </a>
-                        </li>
-                      </ul>
+                      <div className="scrollable-container">
+                        <ul
+                          className={`sub-menu ${
+                            menuOpenNegocios ? "open" : ""
+                          }`}
+                        >
+                          <li>
+                            <a href="#">
+                              <button className="btn btn-secondary">
+                                <i className="fab fa-apple"></i>
+                                Descargar para iOS
+                              </button>
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              href="https://play.google.com/store/apps/details?id=com.magudali.seller&pli=1"
+                              target="_blank"
+                            >
+                              <button className="btn btn-success">
+                                <i className="fab fa-google-play"></i>
+                                Descargar para Android
+                              </button>
+                            </a>
+                          </li>
+                          {comercios.map((comercio) => (
+                            <li key={comercio.id}>
+                              <a href={comercio.link} target={"_blank"}>
+                                <img
+                                  src={`${apiUrl}/images/${comercio.imagen}`}
+                                  alt=""
+                                  width={40}
+                                />{" "}
+                                {comercio.nombre}{" "}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </li>
 
                     <li
@@ -120,10 +147,13 @@ function Header() {
                             menuOpenCobertura ? "open" : ""
                           }`}
                         >
-                          {departamentosNicaragua.map((departamento, index) => (
-                            <li key={index}>
+                          {departamentos.map((departamento) => (
+                            <li key={departamento.id}>
                               {" "}
-                              <a href="/404"> {departamento} </a>{" "}
+                              <a href="/404">
+                                {" "}
+                                {departamento.departamento}{" "}
+                              </a>{" "}
                             </li>
                           ))}
                         </ul>
@@ -210,41 +240,8 @@ function Header() {
                   <ul>
                     <li>
                       <a href="/">
-                        Negocios <i className="fal fa-angle-down"></i>
+                        Comercios <i className="fal fa-angle-down"></i>
                       </a>
-                      <ul className="sub-menu big-device-none">
-                        <li>
-                          <a href="/404">Home 1</a>
-                        </li>
-                        <li>
-                          <a href="/404">Home 2</a>
-                        </li>
-                        <li>
-                          <a href="/404">Home 3</a>
-                        </li>
-                        <li>
-                          <a href="/404">Home 4</a>
-                        </li>
-                        <li>
-                          <a href="/404">Home 5</a>
-                        </li>
-                        <li>
-                          <a href="/404">Home 6</a>
-                        </li>
-                        <li>
-                          <a href="/404">Home 7</a>
-                        </li>
-                        <li>
-                          <a href="/404">Home 8</a>
-                        </li>
-                        <li>
-                          <a href="/404">Home Rtl</a>
-                        </li>
-                        <li>
-                          <a href="/404">Home Dark</a>
-                        </li>
-                      </ul>
-
                       <div className="mega-menu-main-wrap pt-10 scrollable-container">
                         <ul>
                           <li>
@@ -299,10 +296,13 @@ function Header() {
                               Nicaragua{" "}
                             </a>
                           </li>
-                          {departamentosNicaragua.map((departamento, index) => (
+                          {departamentos.map((departamento, index) => (
                             <li key={index}>
                               {" "}
-                              <a href="/404"> {departamento} </a>{" "}
+                              <a href="/404">
+                                {" "}
+                                {departamento.departamento}{" "}
+                              </a>{" "}
                             </li>
                           ))}
                         </ul>
