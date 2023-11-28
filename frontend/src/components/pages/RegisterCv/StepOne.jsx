@@ -12,6 +12,7 @@ const StepOne = ({
   setCorreo,
   telefono,
   cod,
+  setCod,
   countryCodes,
   setTelefono,
   selectedCountry,

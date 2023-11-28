@@ -2,10 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import Header from "../../common/Header";
 import Footer from "../../common/Footer";
 import apiUrl from "../../config/Config";
+import validateFieldStepOne from "../../helper/ValidateFieldStepOne";
+import validateFieldStepTwo  from "../../helper/ValidateFieldStepTwo";
+import validateFieldStepThree  from "../../helper/ValidateFieldStepThree";
+
 import axios from "axios";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
+
 
 const URIempleos = `${apiUrl}/empleos/`;
 const URIdatosgenerales = `${apiUrl}/datosgenerales/`;
@@ -27,8 +32,7 @@ import {
   cloud,
   niveles,
 } from "../../data/DataListas";
-import { Link } from "react-router-dom";
-
+import { redirect } from "react-router-dom";
 
 const RegisterCv = () => {
   const [empleos, setEmpleos] = useState([]);
@@ -140,7 +144,7 @@ const RegisterCv = () => {
 
   //procedimiento para guardar los datos
   const guardar = async (e) => {
-    e.preventDefault();
+    //e.preventDefault();
 
     // Unir los elementos del array en una cadena
     const sistemasOperativosString = selectedSistemasOperativos.join(", ");
@@ -325,8 +329,92 @@ const RegisterCv = () => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
-  const handleNext = () => {
-    setActiveStep((prevStep) => prevStep + 1);
+
+  const handleNext = () => {    
+    if (activeStep === 0 ) {
+      const validateStepOne = validateFieldStepOne(
+        nombre,
+        apellido,
+        correo,
+        cod,
+        telefono,
+        selectedCountry,
+        selectedDisponibilidad,
+        selectedEmpleo,
+        aniosExperiencia,
+        expectativaSalario,
+        resumen,
+        educacionFields
+      );
+
+      if (validateStepOne){
+        setActiveStep((prevStep) => prevStep + 1); 
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: 'Necesita llenar todos los campos, para continuar.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#007bff',
+        })
+      }
+    } 
+
+    if (activeStep === 1 ) {
+      const validateStepTwo = validateFieldStepTwo(
+        experienciaFields,
+        certificacionFields
+      );
+  
+      if (validateStepTwo){
+          setActiveStep((prevStep) => prevStep + 1); 
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: 'Necesita llenar todos los campos, para continuar.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#007bff',
+        })
+      }
+    }
+
+    if (activeStep === 2 ) {
+      const validateStepThree = validateFieldStepThree(
+        selectedSistemasOperativos,
+        selectedLenguajesProgramacion,
+        selectedTools,
+        selectedLibrerias,
+        selectedDataBases,
+        selectedCloud,
+        selectedEspanol,
+        selectedIngles        
+      );
+
+      if (validateStepThree){
+        guardar();
+        Swal.fire({
+          title: 'Éxito',
+          text: 'Datos guardados correctamente.',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#007bff',
+          allowOutsideClick: false, 
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = '/register';
+          }
+        })
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: 'Necesita llenar todos los campos, para guardar.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#007bff',
+        })
+      }
+    }
   };
 
   const handlePrev = () => {
@@ -625,6 +713,7 @@ const RegisterCv = () => {
               setCorreo={setCorreo}
               telefono={telefono}
               cod={cod}
+              setCod={setCod}
               countryCodes={countryCodes}
               setTelefono={setTelefono}
               selectedCountry={selectedCountry}
@@ -725,7 +814,7 @@ const RegisterCv = () => {
                 Siguiente <i className="fas fa-chevron-right"></i>
               </button>
             ) : (
-              <button className="btn btn-primary ml-auto p-2" /* onClick={handleFinish} */>
+              <button className="btn btn-primary ml-auto p-2"  onClick={handleNext} >
                 Terminar <i className="fas fa-check"></i>
               </button>
             )}
