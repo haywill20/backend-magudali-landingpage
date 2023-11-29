@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Footer from "../common/Footer";
 import Header from "../common/Header";
 
-const SupportPage = () => {
+const ContactPage = () => {
   return (
     <>
       <Header />
@@ -114,7 +114,7 @@ const SupportPage = () => {
                     <input type="number" name="phone" placeholder="Teléfono" />
                   </div>
                   <div className="col-md-12">
-                    <input type="text" name="suject" placeholder="Subject" />
+                    <input type="text" name="suject" placeholder="Objetivo" />
                   </div>
                   <div className="col-md-12">
                     <textarea
@@ -144,4 +144,4 @@ const SupportPage = () => {
     </>
   );
 };
-export default SupportPage;
+export default ContactPage;

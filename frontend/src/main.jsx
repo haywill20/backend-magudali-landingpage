@@ -18,7 +18,7 @@ import JobsPage from "./components/pages/JobsPage";
 import RegisterCv from "./components/pages/RegisterCv/RegisterCv";
 import TermsSeller from "./components/pages/TermsSeller";
 import TermsDelivery from "./components/pages/TermsDelivery";
-import SupportPage from "./components/pages/SupportPage";
+import ContactPage from "./components/pages/ContactPage";
 import JobDetails from "./components/pages/JobDetails";
 import "./assets/css/bootstrap.min.css";
 import "./assets/css/font-awesome.min.css";
@@ -59,7 +59,7 @@ function App() {
             <Route path="/jobsPage" element={<JobsPage />} />
             <Route path="/jobdetails/:id" element={<JobDetails />} />
             <Route path="/register" element={<RegisterCv />} />
-            <Route path="/support" element={<SupportPage />} />
+            <Route path="/contact" element={<ContactPage />} />
             <Route path="/aboutUs" element={<AboutUs />} />
           </Routes>
         </ScrollToTop>

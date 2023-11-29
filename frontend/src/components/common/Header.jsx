@@ -316,10 +316,7 @@ function Header() {
                       <Link to="/aboutUs"> Nosotros </Link>{" "}
                     </li>
                     <li>
-                      <Link to="/404"> Contactanos </Link>{" "}
-                    </li>
-                    <li>
-                      <Link to="/support"> Ayuda </Link>{" "}
+                      <Link to="/contact"> Contactanos </Link>{" "}
                     </li>
                   </ul>
                 </div>
