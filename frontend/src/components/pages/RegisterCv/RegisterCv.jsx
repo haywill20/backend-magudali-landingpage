@@ -49,7 +49,7 @@ const RegisterCv = () => {
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [correo, setCorreo] = useState("");
-  const [cod, setCod] = useState("");
+  const [cod, setCod] = useState("+505");
   const [telefono, setTelefono] = useState("");
   const [isOpenCountry, setIsOpenCountry] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState("");
