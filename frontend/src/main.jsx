@@ -29,6 +29,7 @@ import "./assets/css/custom-animation.css";
 import "./assets/css/default.css";
 import "./assets/css/style.css";
 import "./assets/css/responsive.css";
+import AboutUs from "./components/pages/AboutUs/AboutUs";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -59,6 +60,7 @@ function App() {
             <Route path="/jobdetails/:id" element={<JobDetails />} />
             <Route path="/register" element={<RegisterCv />} />
             <Route path="/support" element={<SupportPage />} />
+            <Route path="/aboutUs" element={<AboutUs />} />
           </Routes>
         </ScrollToTop>
       </Router>

@@ -291,7 +291,7 @@ function Header() {
                         <ul>
                           <li>
                             {" "}
-                            <a className="pages-main-content" href="/404">
+                            <a className="pages-main-content" href="/">
                               {" "}
                               Nicaragua{" "}
                             </a>
@@ -313,7 +313,7 @@ function Header() {
                       <Link to="/jobsPage"> Empleos </Link>{" "}
                     </li>
                     <li>
-                      <Link to="/404"> Nosotros </Link>{" "}
+                      <Link to="/aboutUs"> Nosotros </Link>{" "}
                     </li>
                     <li>
                       <Link to="/404"> Contactanos </Link>{" "}

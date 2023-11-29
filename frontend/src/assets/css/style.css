@@ -7391,7 +7391,7 @@ blockquote cite {
   bottom: 8px;
   width: 100%;
   height: 20px;
-  background: #ff6e85;
+  background: #fe8850;
   z-index: -1;
 }
 .appie-about-top-title p {
@@ -7465,7 +7465,7 @@ blockquote cite {
   top: -710px;
   height: 645px;
   width: 80vw;
-  background-image: url(../images/about-page-thumb.jpg);
+  background-image: url(../images/about-page-thumb.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

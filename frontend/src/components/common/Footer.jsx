@@ -1,10 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
-function Footer() {
+function Footer({ isAboutPage }) {
+  //Verifica en que componente se está
+  let sectionClasses = "appie-footer-area";
+
+  if (isAboutPage) {
+    sectionClasses += ` appie-footer-about-area`;
+  }
   return (
     <>
-      <section className="appie-footer-area">
+      <section className={sectionClasses}>
         <div className="container">
           <div className="row">
             <div className="col-lg-4 col-md-6">
