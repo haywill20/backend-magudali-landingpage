@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./StylesRegisterCv";
 
 const StepOne = ({
@@ -42,6 +42,22 @@ const StepOne = ({
   handleEliminarEducacion,
   handleAgregarEducacion,
 }) => {
+  const handleWheel = (e) => {
+    if (e.target.type === 'number') {
+      e.preventDefault();
+    }
+  };
+  
+  // ...
+  
+  useEffect(() => {
+    window.addEventListener('wheel', handleWheel, { passive: false });
+  
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
   return (
     <div className="container mt-5">
       <h2 style={styles.datosGeneralesColor}>Datos Generales</h2>
