@@ -9,7 +9,9 @@ export const getAllEmpleos = async (req, res) => {
     const empleos = await EmpleoModel.findAll();
     res.json(empleos);
   } catch (error) {
-    res.status(500).json({ message: "Error al obtener los empleos", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error al obtener los empleos", error: error.message });
   }
 };
 
@@ -36,6 +38,8 @@ export const getEmpleo = async (req, res) => {
     res.json(empleo[0]);
     console.log(res);
   } catch (error) {
-    res.status(500).json({ message: "Error al obtener el empleo", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error al obtener el empleo", error: error.message });
   }
 };
