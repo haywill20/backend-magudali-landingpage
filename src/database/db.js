@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-const db = new Sequelize("landingpage_db", "root", "", {
+const db = new Sequelize("maguinev_landingpage_db", "root", "", {
   host: "localhost",
   dialect: "mysql",
 });

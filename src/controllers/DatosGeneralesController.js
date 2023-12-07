@@ -49,3 +49,95 @@ export const createDatoGeneral = async (req, res) => {
     res.status(500).json({ error: "Error al insertar Datos Generales" });
   }
 };
+
+//Metodo para Obtener un Registro de datos generales
+export const getDatoGeneral = async (req, res) => {
+  try {
+    // Obtiene el ID de los parámetros de ruta
+    const { id } = req.params;
+    // Busca los datos generales que coincidan con el ID de ruta
+    const datosGenerales = await DatosGeneralesModel.findByPk(id);
+
+    if (!datosGenerales) {
+      return res.status(404).json({ error: "No existe un dato general con ese ID" });
+    }
+    // Envía una respuesta exitosa con los datos generales
+    res.status(200).json(datosGenerales);
+  } catch (error) {
+    // Maneja errores, si los hay
+    console.error("Error en getDatoGeneral:", error);
+    // Envía una respuesta de error
+    res.status(500).json({ error: "Error al obtener los datos generales" });
+  }
+};
+
+//Metodo para Obtener todos los Registros de datos generales
+export const getAllDatosGenerales = async (req, res) => {
+  try {
+    // Busca todos los datos generales
+    const datosGenerales = await DatosGeneralesModel.findAll();
+    // Envía una respuesta exitosa con los datos generales
+    res.status(200).json(datosGenerales);
+  } catch (error) {
+    // Maneja errores, si los hay
+    console.error("Error en getAllDatosGenerales:", error);
+    // Envía una respuesta de error
+    res.status(500).json({ error: "Error al obtener los datos generales" });
+  }
+};
+
+//Metodo para Actualizar un Registro de datos generales
+export const updateDatoGeneral = async (req, res) => {
+  try {
+    // Obtiene el ID de los parámetros de ruta
+    const { id } = req.params;
+    // Busca los datos generales que coincidan con el ID de ruta
+    const datosGenerales = await DatosGeneralesModel.findByPk(id);
+    // Si los datos generales existen, los actualiza y guarda
+    if (datosGenerales) {
+      await datosGenerales.update(req.body);
+
+      return res.status(200).json({
+        message: "Datos Generales actualizados con éxito",
+      });
+    } else {
+      // Envía una respuesta de error
+      res.status(404).json({ error: "No existe datos generales" });
+    }
+  } catch (error) {
+    // Maneja errores, si los hay
+    console.error("Error en updateDatoGeneral:", error);
+    // Envía una respuesta de error
+    res.status(500).json({ error: "Error al actualizar los datos generales" });
+  }
+};
+
+//Metodo para Eliminar un Registro de datos generales
+export const deleteDatoGeneral = async (req, res) => {
+  try {
+    // Obtiene el ID de los parámetros de ruta
+    const { id } = req.params;
+    // Busca los datos generales que coincidan con el ID de ruta
+    const datosGenerales = await DatosGeneralesModel.findByPk(id);
+
+    if (!datosGenerales) {
+      return res.status(404).json({ error: "No existe un dato general con ese ID" });
+    }
+    // Si los datos generales existen, los elimina
+    if (datosGenerales) {
+      await datosGenerales.destroy();
+      // Envía una respuesta exitosa
+      res.status(200).json({
+        message: "Datos Generales eliminados con éxito",
+      });
+    } else {
+      // Envía una respuesta de error
+      res.status(404).json({ error: "No existe datos generales" });
+    }
+  } catch (error) {
+    // Maneja errores, si los hay
+    console.error("Error en deleteDatoGeneral:", error);
+    // Envía una respuesta de error
+    res.status(500).json({ error: "Error al eliminar los datos generales" });
+  }
+};
