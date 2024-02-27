@@ -12,6 +12,7 @@ import {
   deleteComercio,
 } from "../controllers/ComercioController.js";
 import { getAllDepartamentos, getDepartamento, createDepartamento, updateDepartamento, deleteDepartamento } from "../controllers/DepartamentoController.js";
+import { isAuthenticaded, login } from "../controllers/authController.js";
 
 const router = express.Router();
 
@@ -63,5 +64,10 @@ router.get("/departamento/:id", getDepartamento);
 router.post("/departamento", createDepartamento);
 router.put("/departamento/:id", updateDepartamento);
 router.delete("/departamento/:id", deleteDepartamento);
+
+// rutas para el login
+router.post("/login", login);
+// TODO: esto nos dira si tenemos permisos para ir al home
+router.get("/homeValidate", isAuthenticaded);
 
 export default router;

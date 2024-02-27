@@ -6,11 +6,24 @@ import db from "./database/db.js";
 
 //importamos nuestro enrutador
 import routes from "./routes/routes.js";
+import cookieParser from "cookie-parser";
+
+import dotenv from "dotenv";
+
 
 const app = express();
 
-app.use(cors());
+app.use(cors(
+  {
+    origin: "http://localhost:3000",
+    credentials: true,
+  }
+));
 app.use(express.json());
+
+dotenv.config({ path: './.env' });
+
+app.use(cookieParser());
 app.use("/", routes);
 async function startServer() {
   try {
