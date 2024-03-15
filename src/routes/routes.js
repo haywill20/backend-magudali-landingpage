@@ -13,6 +13,7 @@ import {
 } from "../controllers/ComercioController.js";
 import { getAllDepartamentos, getDepartamento, createDepartamento, updateDepartamento, deleteDepartamento } from "../controllers/DepartamentoController.js";
 import { isAuthenticaded, login } from "../controllers/authController.js";
+import { createJobController } from "../controllers/createJobController.js";
 
 const router = express.Router();
 
@@ -67,7 +68,11 @@ router.delete("/departamento/:id", deleteDepartamento);
 
 // rutas para el login
 router.post("/login", login);
-// TODO: esto nos dira si tenemos permisos para ir al home
-router.get("/homeValidate", isAuthenticaded);
+router.get("/homeValidate", isAuthenticaded); // TODO: esto nos dira si tenemos permisos para ir al home
+
+// rutas para empleos
+router.post("/createjob", createJobController);
+
+
 
 export default router;
