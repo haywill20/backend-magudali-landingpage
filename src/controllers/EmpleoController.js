@@ -7,7 +7,11 @@ import EmpleoModel from "../models/EmpleoModel.js";
 export const getAllEmpleos = async (req, res) => {
   try {
     const empleos = await EmpleoModel.findAll();
-    res.json(empleos);
+    if ( empleos.length === 0 ) {
+      res.status(204).json({ message: "No hay empleos disponibles" });
+    } else if( empleos.length > 0) {
+      res.status(200).json(empleos);
+    }
   } catch (error) {
     res
       .status(500)
@@ -24,7 +28,7 @@ export const getEmpleo = async (req, res) => {
   });
 
   if (!empleoFound) {
-    return res.status(404).json({ message: "Empleo no encontrado" });
+    return res.status(204).json({ message: "Empleo no encontrado" });
   }
 
   if (!empleoId || isNaN(parseInt(empleoId))) {
@@ -39,11 +43,11 @@ export const getEmpleo = async (req, res) => {
     });
 
     if (!empleo) {
-      return res.status(404).json({ message: "Empleo no encontrado" });
+      return res.status(204).json({ message: "Empleo no encontrado" });
     }
 
     res.json(empleo[0]);
-    console.log(res);
+    //console.log(res);
   } catch (error) {
     res
       .status(500)
@@ -55,7 +59,10 @@ export const getEmpleo = async (req, res) => {
 export const createEmpleo = async (req, res) => {
   try {
     const empleo = await EmpleoModel.create(req.body);
-    res.status(200).json(empleo);
+    // valida si el objeto devuelto por create() NO está vacío
+    if( Object.keys(empleo).length === 0 && empleo.constructor === Object ) {
+      res.status(200).json(empleo);
+    }
   } catch (error) {
     res
       .status(500)
@@ -72,7 +79,7 @@ export const updateEmpleo = async (req, res) => {
   });
 
   if (!empleoFound) {
-    return res.status(404).json({ message: "Empleo no encontrado" });
+    return res.status(204).json({ message: "Empleo no encontrado" });
   }
 
   if (!empleoId || isNaN(parseInt(empleoId))) {
@@ -87,10 +94,10 @@ export const updateEmpleo = async (req, res) => {
     });
 
     if (!empleo) {
-      return res.status(404).json({ message: "Empleo no encontrado" });
+      return res.status(204).json({ message: "Empleo no encontrado" });
     }
 
-    res.json({ message: "Empleo actualizado" });
+    res.status(200).json({ message: "Empleo actualizado" });
   } catch (error) {
     res
       .status(500)
@@ -107,7 +114,7 @@ export const deleteEmpleo = async (req, res) => {
   });
 
   if (!empleoFound) {
-    return res.status(404).json({ message: "Empleo no encontrado" });
+    return res.status(204).json({ message: "Empleo no encontrado" });
   }
 
   if (!empleoId || isNaN(parseInt(empleoId))) {
@@ -121,7 +128,7 @@ export const deleteEmpleo = async (req, res) => {
       },
     });
     
-    res.json({ message: "Empleo eliminado" });
+    res.status(200).json({ message: "Empleo eliminado" });
   } catch (error) {
     res
       .status(500)
