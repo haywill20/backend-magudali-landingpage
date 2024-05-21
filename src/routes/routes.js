@@ -15,6 +15,8 @@ import { getAllDepartamentos, getDepartamento, createDepartamento, updateDeparta
 import { isAuthenticaded, login } from "../controllers/authController.js";
 import { createJobController } from "../controllers/createJobController.js";
 
+import { getAllVacantes, getVacante, createVacante, updateVacante, deleteVacante } from "../controllers/vacantesController.js";
+
 const router = express.Router();
 
 //rutas para empleos
@@ -72,6 +74,13 @@ router.get("/homeValidate", isAuthenticaded); // TODO: esto nos dira si tenemos 
 
 // rutas para empleos
 router.post("/createjob", createJobController);
+
+// rutas para vacantes:
+router.post("/vacante", createVacante);
+router.get("/vacantes", getAllVacantes);
+router.get("/vacante/:id", getVacante);
+router.put("/vacante/:id", updateVacante);
+router.delete("/vacante/:id", deleteVacante);
 
 
 
