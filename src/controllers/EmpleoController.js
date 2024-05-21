@@ -60,7 +60,7 @@ export const createEmpleo = async (req, res) => {
   try {
     const empleo = await EmpleoModel.create(req.body);
     // valida si el objeto devuelto por create() NO está vacío
-    if( Object.keys(empleo).length === 0 && empleo.constructor === Object ) {
+    if( Object.keys(empleo).length !== 0 && empleo.constructor !== Object ) {
       res.status(200).json(empleo);
     }
   } catch (error) {
