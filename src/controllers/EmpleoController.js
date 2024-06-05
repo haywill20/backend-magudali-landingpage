@@ -8,14 +8,14 @@ export const getAllEmpleos = async (req, res) => {
   try {
     const empleos = await EmpleoModel.findAll();
     if ( empleos.length === 0 ) {
-      res.status(204).json({ message: "No hay empleos disponibles" });
+      res.status(200).json({ message: "NO HAY EMPLEOS DISPONIBLES" });
     } else if( empleos.length > 0) {
       res.status(200).json(empleos);
     }
-  } catch (error) {
+  } catch (err) {
     res
       .status(500)
-      .json({ message: "Error al obtener los empleos", error: error.message });
+      .json({ message: "ERROR INTERNO AL OBTENER EMPLEOS", error: err.message });
   }
 };
 
@@ -27,12 +27,14 @@ export const getEmpleo = async (req, res) => {
     where: { id: empleoId },
   });
 
-  if (!empleoFound) {
-    return res.status(204).json({ message: "Empleo no encontrado" });
+  if (!empleoId || isNaN(parseInt(empleoId))) {
+    return res.status(400).json({ message: "ID EMPLEO NO VALIDO" });
   }
 
-  if (!empleoId || isNaN(parseInt(empleoId))) {
-    return res.status(400).json({ message: "ID de empleo no válido" });
+  if (!empleoFound) {
+    return res.status(200).json({
+      message: "EMPLEO NO ENCONTRADO"
+    });
   }
 
   try {
@@ -43,15 +45,14 @@ export const getEmpleo = async (req, res) => {
     });
 
     if (!empleo) {
-      return res.status(204).json({ message: "Empleo no encontrado" });
+      return res.status(200).json({ message: "EMPLEO NO ENCONTRADO" });
     }
 
     res.json(empleo[0]);
-    //console.log(res);
-  } catch (error) {
+  } catch (err) {
     res
       .status(500)
-      .json({ message: "Error al obtener el empleo", error: error.message });
+      .json({ message: "ERROR INTERNO AL OBTENER EMPLEO", error: err.message });
   }
 };
 
@@ -61,12 +62,12 @@ export const createEmpleo = async (req, res) => {
     const empleo = await EmpleoModel.create(req.body);
     // valida si el objeto devuelto por create() NO está vacío
     if( Object.keys(empleo).length !== 0 && empleo.constructor !== Object ) {
-      res.status(200).json(empleo);
+      res.status(201).json(empleo);
     }
-  } catch (error) {
+  } catch (err) {
     res
       .status(500)
-      .json({ message: "Error al crear el empleo", error: error.message });
+      .json({ message: "ERROR INTERNO AL CREAR EMPLEO", error: err.message });
   }
 };
 
@@ -74,16 +75,16 @@ export const createEmpleo = async (req, res) => {
 export const updateEmpleo = async (req, res) => {
   const empleoId = req.params.id;
 
+  if (!empleoId || isNaN(parseInt(empleoId))) {
+    return res.status(400).json({ message: "ID EMPLEO NO VALIDO" });
+  }
+
   const empleoFound = await EmpleoModel.findOne({
     where: { id: empleoId },
   });
 
   if (!empleoFound) {
-    return res.status(204).json({ message: "Empleo no encontrado" });
-  }
-
-  if (!empleoId || isNaN(parseInt(empleoId))) {
-    return res.status(400).json({ message: "ID de empleo no válido" });
+    return res.status(200).json({ message: "EMPLEO NO ENCONTRADO" });
   }
 
   try {
@@ -94,14 +95,14 @@ export const updateEmpleo = async (req, res) => {
     });
 
     if (!empleo) {
-      return res.status(204).json({ message: "Empleo no encontrado" });
+      return res.status(200).json({ message: "EMPLEO NO ENCONTRADO" });
     }
 
-    res.status(200).json({ message: "Empleo actualizado" });
-  } catch (error) {
+    res.status(200).json({ message: "EMPLEO ACTUALIZADO" });
+  } catch (err) {
     res
       .status(500)
-      .json({ message: "Error al actualizar el empleo", error: error.message });
+      .json({ message: "ERROR INTERNO AL ACTUALIZAR", error: err.message });
   }
 };
 
@@ -109,16 +110,16 @@ export const updateEmpleo = async (req, res) => {
 export const deleteEmpleo = async (req, res) => {
   const empleoId = req.params.id;
 
+  if (!empleoId || isNaN(parseInt(empleoId))) {
+    return res.status(400).json({ message: "ID EMPLEO NO VALIDO" });
+  }
+
   const empleoFound = await EmpleoModel.findOne({
     where: { id: empleoId },
   });
 
   if (!empleoFound) {
-    return res.status(204).json({ message: "Empleo no encontrado" });
-  }
-
-  if (!empleoId || isNaN(parseInt(empleoId))) {
-    return res.status(400).json({ message: "ID de empleo no válido" });
+    return res.status(200).json({ message: "EMPLEO NO ENCONTRADO" });
   }
 
   try {
@@ -128,10 +129,10 @@ export const deleteEmpleo = async (req, res) => {
       },
     });
     
-    res.status(200).json({ message: "Empleo eliminado" });
-  } catch (error) {
+    res.status(200).json({ message: "EMPLEO ELIMINADO" });
+  } catch (err) {
     res
       .status(500)
-      .json({ message: "Error al eliminar el empleo", error: error.message });
+      .json({ message: "ERROR INTERNO AL ELIMINAR EMPLEO", error: err.message });
   }
 };
