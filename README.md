@@ -29,3 +29,51 @@ A continuacion se muestra un ejemplo de como debería quedar un commit
 git commit -m "feat: Agregar función de búsqueda por nombre de usuario"
 
 Se recomienda seguir estas convenciones de commit para mantener un historial de cambios claro y organizado.
+
+# Codigos de respuesta del servidor:
+
+1xx (Respuestas Informativas):
+
+100 - Continuar
+101 - Cambio de Protocolo
+102 - Procesando (WebDAV; RFC 2518)
+2xx (Respuestas Exitosas):
+
+200 - OK
+201 - Creado
+202 - Aceptado
+204 - Sin Contenido
+206 - Contenido Parcial
+207 - Multi-Estado (WebDAV; RFC 4918)
+208 - Ya Reportado (WebDAV; RFC 5842)
+3xx (Redirecciones):
+
+300 - Múltiples Opciones
+301 - Movido Permanentemente
+302 - Encontrado
+303 - Ver Otro
+304 - No Modificado
+307 - Redirección Temporal
+308 - Redirección Permanente (RFC 7538)
+4xx (Errores del Cliente):
+
+400 - Solicitud Incorrecta
+401 - No Autorizado
+403 - Prohibido
+404 - No Encontrado
+405 - Método No Permitido
+406 - No Aceptable
+408 - Tiempo de Espera Agotado
+409 - Conflicto
+410 - Desaparecido
+429 - Demasiadas Solicitudes
+5xx (Errores del Servidor):
+
+500 - Error Interno del Servidor
+501 - No Implementado
+502 - Puerta de Enlace Incorrecta
+503 - Servicio No Disponible
+504 - Tiempo de Espera de la Puerta de Enlace Agotado
+505 - Versión HTTP No Compatible
+507 - Almacenamiento Insuficiente (WebDAV; RFC 4918)
+511 - Se Requiere Autenticación de Red
