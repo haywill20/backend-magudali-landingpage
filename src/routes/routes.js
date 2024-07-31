@@ -17,6 +17,14 @@ import { createJobController } from "../controllers/createJobController.js";
 
 import { getAllVacantes, getVacante, createVacante, updateVacante, deleteVacante } from "../controllers/vacantesController.js";
 
+import {
+   getAllIcons,
+   getIcon,
+   createIcon,
+   updateIcon,
+   deleteIcon
+} from "../controllers/admin/IconController.js";
+
 const router = express.Router();
 
 //rutas para empleos
@@ -82,6 +90,11 @@ router.get("/vacante/:id", getVacante);
 router.put("/vacante/:id", updateVacante);
 router.delete("/vacante/:id", deleteVacante);
 
-
+//rutas para iconos
+router.get("/icons", getAllIcons);
+router.get("/icon/:id", getIcon);
+router.post("/icon", createIcon);
+router.put("/icon/:id", updateIcon);
+router.delete("/icon/:id", deleteIcon);
 
 export default router;
