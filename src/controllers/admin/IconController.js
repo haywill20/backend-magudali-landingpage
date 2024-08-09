@@ -1,14 +1,59 @@
-import IconModel from "../../models/admin/IconModel.js";
+import IconModel from "../../models/admin/IconModel.js"; // Asegúrate de importar tu modelo correctamente
+import { Sequelize } from "sequelize"; // Importa Sequelize para manejar errores específicos
+import winston from "winston"; // Importa winston
 
-// Obtener todos los iconos
+// Configurar winston
+const logger = winston.createLogger({
+  level: "error",
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  ),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: "error.log" }),
+  ],
+});
+
+// Obtener todos los íconos
 export const getAllIcons = async (req, res) => {
   try {
     const icons = await IconModel.findAll();
+
+    if (icons.length === 0) {
+      return res.status(204).json({ message: "No hay íconos disponibles" }); // 204 - No Content
+    }
+
     res.status(200).json(icons); // 200 - OK
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error al obtener los iconos", error: error.message }); // 500 - Error Interno del Servidor
+    if (error instanceof Sequelize.ConnectionError) {
+      logger.error("Error de conexión a la base de datos:", {
+        error: error.message,
+      }); // Log de error de conexión
+      return res
+        .status(503)
+        .json({
+          message:
+            "Servicio no disponible. Error de conexión a la base de datos.",
+        }); // 503 - Service Unavailable
+    }
+
+    if (error instanceof Sequelize.DatabaseError) {
+      logger.error("Error en la consulta a la base de datos:", {
+        error: error.message,
+      }); // Log de error de consulta
+      return res
+        .status(500)
+        .json({
+          message:
+            "Error al obtener los íconos. Problema en la consulta a la base de datos.",
+        }); // 500 - Error Interno del Servidor
+    }
+
+    logger.error("Error inesperado al obtener los íconos:", {
+      error: error.message,
+    }); // Log de error inesperado
+    res.status(500).json({ message: "Error inesperado al obtener los íconos" }); // 500 - Error Interno del Servidor
   }
 };
 
@@ -16,10 +61,18 @@ export const getAllIcons = async (req, res) => {
 export const getIcon = async (req, res) => {
   try {
     const icon = await IconModel.findByPk(req.params.id);
-    if (!icon) return res.status(404).json({ message: 'Icon not found' }); // 404 - No Encontrado
+    if (!icon) return res.status(404).json({ message: "Ícono no encontrado" }); // 404 - No Encontrado
     res.status(200).json(icon); // 200 - OK
   } catch (error) {
-    res.status(500).json({ message: error.message }); // 500 - Error Interno del Servidor
+    logger.error("Error inesperado al obtener el ícono:", {
+      error: error.message,
+    }); // Log de error inesperado
+    res
+      .status(500)
+      .json({
+        message: "Error inesperado al obtener el ícono",
+        error: error.message,
+      }); // 500 - Error Interno del Servidor
   }
 };
 
@@ -30,10 +83,17 @@ export const createIcon = async (req, res) => {
     const newIcon = await IconModel.create({ nombre, valor });
     res.status(201).json(newIcon); // 201 - Creado
   } catch (error) {
-    res.status(500).json({ message: error.message }); // 500 - Error Interno del Servidor
+    logger.error("Error inesperado al crear el ícono:", {
+      error: error.message,
+    }); // Log de error inesperado
+    res
+      .status(500)
+      .json({
+        message: "Error inesperado al crear el ícono",
+        error: error.message,
+      }); // 500 - Error Interno del Servidor
   }
 };
-
 
 // Procedimiento para actualizar un icono por ID
 export const updateIcon = async (req, res) => {
@@ -67,19 +127,34 @@ export const updateIcon = async (req, res) => {
 
     res.status(200).json({ message: "Ícono actualizado correctamente" });
   } catch (error) {
-    res.status(500).json({ message: "Error al actualizar el ícono", error: error.message });
+    logger.error("Error inesperado al actualizar el ícono:", {
+      error: error.message,
+    }); // Log de error inesperado
+    res
+      .status(500)
+      .json({
+        message: "Error inesperado al actualizar el ícono",
+        error: error.message,
+      }); // 500 - Error Interno del Servidor
   }
 };
-
 
 // Eliminar un icono por ID
 export const deleteIcon = async (req, res) => {
   try {
     const icon = await IconModel.findByPk(req.params.id);
-    if (!icon) return res.status(404).json({ message: 'Icon not found' }); // 404 - No Encontrado
+    if (!icon) return res.status(404).json({ message: "Ícono no encontrado" }); // 404 - No Encontrado
     await icon.destroy();
     res.status(204).send(); // 204 - Sin Contenido
   } catch (error) {
-    res.status(500).json({ message: error.message }); // 500 - Error Interno del Servidor
+    logger.error("Error inesperado al eliminar el ícono:", {
+      error: error.message,
+    }); // Log de error inesperado
+    res
+      .status(500)
+      .json({
+        message: "Error inesperado al eliminar el ícono",
+        error: error.message,
+      }); // 500 - Error Interno del Servidor
   }
 };
