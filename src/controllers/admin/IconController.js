@@ -30,24 +30,20 @@ export const getAllIcons = async (req, res) => {
       logger.error("Error de conexión a la base de datos:", {
         error: error.message,
       });
-      return res
-        .status(503)
-        .json({
-          message:
-            "Servicio no disponible. Error de conexión a la base de datos.",
-        });
+      return res.status(503).json({
+        message:
+          "Servicio no disponible. Error de conexión a la base de datos.",
+      });
     }
 
     if (error instanceof Sequelize.DatabaseError) {
       logger.error("Error en la consulta a la base de datos:", {
         error: error.message,
       });
-      return res
-        .status(500)
-        .json({
-          message:
-            "Error al obtener los íconos. Problema en la consulta a la base de datos.",
-        });
+      return res.status(500).json({
+        message:
+          "Error al obtener los íconos. Problema en la consulta a la base de datos.",
+      });
     }
 
     logger.error("Error inesperado al obtener los íconos:", {
@@ -81,7 +77,6 @@ export const getIcon = async (req, res) => {
   }
 };
 
-
 // Crear un nuevo icono
 export const createIcon = async (req, res) => {
   const transaction = await IconModel.sequelize.transaction();
@@ -107,7 +102,6 @@ export const createIcon = async (req, res) => {
   }
 };
 
-
 // Procedimiento para actualizar un icono por ID
 export const updateIcon = async (req, res) => {
   const transaction = await IconModel.sequelize.transaction();
@@ -132,7 +126,10 @@ export const updateIcon = async (req, res) => {
       return res.status(400).json({ message: "Nombre y valor son requeridos" });
     }
 
-    await IconModel.update({ nombre, valor }, { where: { id: iconId }, transaction });
+    await IconModel.update(
+      { nombre, valor },
+      { where: { id: iconId }, transaction }
+    );
     await transaction.commit();
 
     res.status(200).json({ message: "Ícono actualizado correctamente" });
@@ -141,10 +138,11 @@ export const updateIcon = async (req, res) => {
     logger.error("Error inesperado al actualizar el ícono:", {
       error: error.message,
     });
-    res.status(500).json({ message: "Error inesperado al actualizar el ícono" });
+    res
+      .status(500)
+      .json({ message: "Error inesperado al actualizar el ícono" });
   }
 };
-
 
 // Eliminar un icono por ID
 export const deleteIcon = async (req, res) => {
@@ -177,4 +175,3 @@ export const deleteIcon = async (req, res) => {
     res.status(500).json({ message: "Error inesperado al eliminar el ícono" });
   }
 };
-
