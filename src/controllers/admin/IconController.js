@@ -82,14 +82,14 @@ export const createIcon = async (req, res) => {
   const transaction = await IconModel.sequelize.transaction();
 
   try {
-    const { nombre, valor } = req.body;
+    const { name, code } = req.body;
 
-    if (!nombre || !valor) {
+    if (!name || !code) {
       await transaction.rollback();
-      return res.status(400).json({ message: "Nombre y valor son requeridos" });
+      return res.status(400).json({ message: "Nombre y codigo son requeridos" });
     }
 
-    const newIcon = await IconModel.create({ nombre, valor }, { transaction });
+    const newIcon = await IconModel.create({ name, code }, { transaction });
     await transaction.commit();
 
     res.status(201).json(newIcon);
@@ -120,14 +120,14 @@ export const updateIcon = async (req, res) => {
       return res.status(404).json({ message: "Ícono no encontrado" });
     }
 
-    const { nombre, valor } = req.body;
-    if (!nombre || !valor) {
+    const { name, code } = req.body;
+    if (!name || !code) {
       await transaction.rollback();
-      return res.status(400).json({ message: "Nombre y valor son requeridos" });
+      return res.status(400).json({ message: "Nombre y codigo son requeridos" });
     }
 
     await IconModel.update(
-      { nombre, valor },
+      { name, code },
       { where: { id: iconId }, transaction }
     );
     await transaction.commit();
