@@ -1,6 +1,6 @@
-import IconModel from "../../models/admin/IconModel.js"; // Asegúrate de importar tu modelo correctamente
-import { Sequelize } from "sequelize"; // Importa Sequelize para manejar errores específicos
-import winston from "winston"; // Importa winston
+import IconModel from "../../models/admin/IconModel.js";
+import { Sequelize } from "sequelize";
+import winston from "winston";
 
 // Configurar winston
 const logger = winston.createLogger({
@@ -82,18 +82,32 @@ export const createIcon = async (req, res) => {
   const transaction = await IconModel.sequelize.transaction();
 
   try {
+    // Extraer datos del cuerpo de la solicitud
     const { name, code } = req.body;
 
-    if (!name || !code) {
+    // Validaciones para evitar que el nombre y codio estén vacios
+    if (
+      !name ||
+      typeof name !== "string" ||
+      (name.trim() === "" && !code) ||
+      typeof code !== "string" ||
+      code.trim() === ""
+    ) {
       await transaction.rollback();
-      return res.status(400).json({ message: "Nombre y codigo son requeridos" });
+      return res.status(400).json({
+        message: "El nombre y código del icono son requeridos",
+      });
     }
 
+    // Crear el nuevo ícono en la base de datos
     const newIcon = await IconModel.create({ name, code }, { transaction });
     await transaction.commit();
 
-    res.status(201).json(newIcon);
+    res
+      .status(201)
+      .json({ newIcon, message: "El ícono se guardó correctamente" });
   } catch (error) {
+    // En caso de error, deshacer la transacción y manejar el error
     await transaction.rollback();
     logger.error("Error inesperado al crear el ícono:", {
       error: error.message,
@@ -123,7 +137,9 @@ export const updateIcon = async (req, res) => {
     const { name, code } = req.body;
     if (!name || !code) {
       await transaction.rollback();
-      return res.status(400).json({ message: "Nombre y codigo son requeridos" });
+      return res
+        .status(400)
+        .json({ message: "Nombre y codigo son requeridos" });
     }
 
     await IconModel.update(
